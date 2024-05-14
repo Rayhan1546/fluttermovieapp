@@ -12,6 +12,8 @@ class RegistationViewModel {
   ValueNotifier<bool> obsecureText2 = ValueNotifier(true);
   ValueNotifier<bool> shouldSignUp = ValueNotifier(false);
 
+  ValueNotifier<String?> errorSnackbarMsg = ValueNotifier(null);
+
   void showPasswordF1() {
     obsecureText1.value = !obsecureText1.value;
   }
@@ -32,20 +34,29 @@ class RegistationViewModel {
     return PasswordValidator.passwordErrorMessage(passwordF2Controller.text);
   }
 
-  String? signUpValidation() {
-    if (nameController.text.isEmpty ||
+  bool isAllFieldEntered() {
+    return (nameController.text.isEmpty ||
         emailController.text.isEmpty ||
         passwordF1Controller.text.isEmpty ||
-        passwordF2Controller.text.isEmpty) {
-      return "Fields can't be empty";
-    } else if (PasswordValidator.isValid(passwordF1Controller.text) == true &&
-        PasswordValidator.isValid(passwordF2Controller.text) == true) {
-      if (PasswordValidator.isSame(
-          passwordF1Controller.text, passwordF2Controller.text)) {
-        shouldSignUp.value = true;
-      } else {
-        return "Passwords must be same!";
-      }
+        passwordF2Controller.text.isEmpty);
+  }
+
+  void onClickedSignUp() {
+    if (isAllFieldEntered()) {
+      errorSnackbarMsg.value = "Fields can't be empty";
+      return;
     }
+
+    if (!PasswordValidator.isValid(passwordF1Controller.text)) {
+      return;
+    }
+
+    if (!PasswordValidator.isSame(
+        passwordF1Controller.text, passwordF2Controller.text)) {
+      errorSnackbarMsg.value = "Password must be same";
+      return;
+    }
+
+    shouldSignUp.value = true;
   }
 }

@@ -106,8 +106,8 @@ class LoginUi extends StatelessWidget {
                       buttonText: 'Sign In',
                       backgroundColor: Colors.blue,
                       onPressed: () {
-                        String? toastmessage = viewModel.signInvalidation();
-                        CustomSnackbar.show(context, toastmessage!);
+                        viewModel.onClickSignIn();
+                        CustomSnackbar.show(context, viewModel.errorSnackbarMsg.value);
                       },
                       textcolor: Colors.white),
                 ),

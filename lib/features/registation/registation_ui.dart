@@ -100,7 +100,7 @@ class RegistationUI extends StatelessWidget {
                           viewModel.showPasswordF2();
                         },
                         errortext: viewModel.passwordErrorF2(),
-                        label: 'confirm Password',
+                        label: 'Confirm Password',
                       );
                     },
                   );
@@ -116,10 +116,8 @@ class RegistationUI extends StatelessWidget {
                   buttonText: 'Sign Up',
                   backgroundColor: Colors.blue,
                   onPressed: () {
-                    String? toastmessage = viewModel.signUpValidation();
-                    if(toastmessage!.isNotEmpty){
-                      CustomSnackbar.show(context, toastmessage!);
-                    }
+                    viewModel.onClickedSignUp();
+                    CustomSnackbar.show(context, viewModel.errorSnackbarMsg.value);
                   },
                   textcolor: Colors.white,
                 ),
