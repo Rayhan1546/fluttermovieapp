@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/features/home_page/future_buider.dart';
+import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
 import 'package:mymovieapp/features/home_page/homepage_ui.dart';
 import 'package:mymovieapp/features/login/login_ui.dart';
 import 'package:mymovieapp/features/registation/registation_ui.dart';
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: HomePageUi(),
+      home: PageTransitionUi(),
     );
   }
 }

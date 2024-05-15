@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
+import 'package:mymovieapp/features/home_page/widgets/listview_builder.dart';
+import 'package:mymovieapp/features/home_page/widgets/pageview_builder.dart';
 
 class HomePageUi extends StatelessWidget {
   HomePageUi({super.key});
@@ -10,67 +12,97 @@ class HomePageUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    viewModel.fetchPopularMovies();
+    viewModel.fetchData();
     return Scaffold(
       body: Container(
         color: Colors.black87,
-        padding: EdgeInsets.fromLTRB(20.0, 60.0, 20.0, 0.0),
+        padding: EdgeInsets.fromLTRB(10.0, 60.0, 10, 5.0),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Welcome back,',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                      ),
-                    ),
-                    Text(
-                      'Rayhan Mahmud.',
-                      style: TextStyle(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Welcome back,',
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                Spacer(),
-                Icon(
-                  Icons.check_box_outline_blank_rounded,
-                  size: 40,
-                  color: Colors.white,
-                ),
-              ],
-            ),
-            SizedBox(height: 30,),
-            ValueListenableBuilder<List?>(
-              valueListenable: viewModel.popularMovies,
-              builder: (context, popularMovies, _) {
-                if (popularMovies == null) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return Container(
-                    height: MediaQuery.of(context).size.height/4,
-                    width: MediaQuery.of(context).size.width,
-                    child: PageView.builder(
-                      itemCount: popularMovies.length,
-                      itemBuilder: (context, index) {
-                        final movie = popularMovies[index];
-                        return Image.network(movie["large_cover_image"],fit: BoxFit.fill,);
-                      },
-                    ),
-                  );
-                }
-              },
-            ),
-          ],
+                          fontSize: 15,
+                        ),
+                      ),
+                      Text(
+                        'Rayhan Mahmud.',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Icon(
+                    Icons.check_box_outline_blank_rounded,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              PageViewBuilder(),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  const Text(
+                    "Top Movie Picks",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Spacer(),
+                  GestureDetector(
+                    child: Text("See All", style: TextStyle(color: Colors.white, fontSize: 13),),
+                    onTap: (){},
+                  )
+                ],
+              ),
+              const SizedBox(height: 10,),
+              ListViewBuilder(),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  const Text(
+                    "Upcoming Movies",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  const Spacer(),
+                  GestureDetector(
+                    child: const Text("See All", style: TextStyle(color: Colors.white, fontSize: 13),),
+                    onTap: (){
+                    },
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              ListViewBuilder()
+            ],
+          ),
         ),
       ),
     );
