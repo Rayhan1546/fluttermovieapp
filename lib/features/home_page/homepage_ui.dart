@@ -15,7 +15,7 @@ class HomePageUi extends StatelessWidget {
     viewModel.fetchData();
     return Scaffold(
       body: Container(
-        color: Colors.black87,
+        color: Colors.black,
         padding: EdgeInsets.fromLTRB(10.0, 60.0, 10, 5.0),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -77,9 +77,6 @@ class HomePageUi extends StatelessWidget {
               ),
               const SizedBox(height: 10,),
               ListViewBuilder(),
-              const SizedBox(
-                height: 15,
-              ),
               Row(
                 children: [
                   const Text(

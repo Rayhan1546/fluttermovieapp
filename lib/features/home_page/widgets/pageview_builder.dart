@@ -13,7 +13,6 @@ class PageViewBuilder extends StatelessWidget {
       valueListenable: ApiCallFunction.popularMovies,
       builder: (context, popularMovies, _) {
         if (popularMovies == null) {
-          print(popularMovies);
           return Center(child: CircularProgressIndicator());
         } else {
           return Container(

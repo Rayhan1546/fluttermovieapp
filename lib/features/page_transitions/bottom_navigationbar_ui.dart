@@ -10,7 +10,7 @@ class BottomNavigationBarUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           icon: Icon(
