@@ -7,12 +7,13 @@ class ElevatedBtn extends StatelessWidget {
   final Color backgroundColor;
   final Color textcolor;
   final VoidCallback onPressed;
+  final double? fontsize;
 
   ElevatedBtn({
     required this.buttonText,
     required this.backgroundColor,
     required this.onPressed,
-    required this.textcolor,
+    required this.textcolor, this.fontsize,
   });
 
   @override
@@ -23,7 +24,7 @@ class ElevatedBtn extends StatelessWidget {
         backgroundColor: backgroundColor, // Background color
         foregroundColor: textcolor, // Text color
         textStyle: TextStyle(
-          fontSize: 20,
+          fontSize: fontsize == null ? 20 : fontsize,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12), // Box shape

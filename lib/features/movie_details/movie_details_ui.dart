@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
-import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
-import 'package:mymovieapp/data/repository/apicall_function.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/widgets/box_shape_text.dart';
 import 'package:mymovieapp/features/movie_details/widgets/rating_bar.dart';
 
 class MovieDetailsUi extends StatelessWidget {
-  final int index;
-  MovieDetailsUi({super.key, required this.index});
+  final int id;
+  MovieDetailsUi({super.key, required this.id});
 
   MovieDetailsViewModel viewModel = MovieDetailsViewModel();
 
   @override
   Widget build(BuildContext context) {
+    viewModel.getMovieDetails(id);
     return ValueListenableBuilder(
-        valueListenable: viewModel.popularMovies,
-        builder: (context, popularMovies, _) {
-          if (popularMovies == null || popularMovies.isEmpty) {
+        valueListenable: viewModel.movieDetails,
+        builder: (context, movie, _) {
+          if (movie == null) {
             return Center(child: CircularProgressIndicator());
           } else {
             return SafeArea(
@@ -31,12 +30,26 @@ class MovieDetailsUi extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 child: Column(
                   children: [
-                    const Text(
-                      "Movie Details",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.w500),
+                    Row(
+                      children: [
+                        GestureDetector(
+                          child: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        SizedBox(width: 10,),
+                        const Text(
+                          "Movie Details",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
@@ -46,8 +59,7 @@ class MovieDetailsUi extends StatelessWidget {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(
-                                popularMovies[index].mediumCoverImage!),
+                            image: NetworkImage(movie.mediumCoverImage!),
                             fit: BoxFit.fill,
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(12.0)),
@@ -59,21 +71,20 @@ class MovieDetailsUi extends StatelessWidget {
                       height: 20,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: popularMovies[index].genres!.length,
+                          itemCount: movie.genres!.length,
                           itemBuilder: (context, genreIndex) {
-                            final isLastItem = genreIndex ==
-                                popularMovies[index].genres!.length - 1;
-                            String genre =
-                                popularMovies[index].genres![genreIndex];
+                            final isLastItem =
+                                genreIndex == movie.genres!.length - 1;
+                            String genre = movie.genres![genreIndex];
                             return isLastItem
                                 ? Text(genre,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600))
                                 : Text(
                                     genre + " ~ ",
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600),
@@ -85,7 +96,7 @@ class MovieDetailsUi extends StatelessWidget {
                       child: Text(
                         textAlign: TextAlign.left,
                         maxLines: 1,
-                        popularMovies[index].title!,
+                        movie.title!,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 22,
@@ -94,29 +105,26 @@ class MovieDetailsUi extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 6,
                     ),
                     Row(
                       children: [
-                        BoxShapeText(
-                            text: popularMovies[index].year!.toString()),
-                        Spacer(
+                        BoxShapeText(text: movie.year!.toString()),
+                        const Spacer(
                           flex: 1,
                         ),
-                        BoxShapeText(
-                            text: popularMovies[index].rating!.toString()),
-                        Spacer(
+                        BoxShapeText(text: movie.rating!.toString()),
+                        const Spacer(
                           flex: 1,
                         ),
-                        BoxShapeText(
-                            text: popularMovies[index].imdbCode.toString()),
-                        Spacer(
+                        BoxShapeText(text: movie.imdbCode.toString()),
+                        const Spacer(
                           flex: 16,
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Align(
@@ -124,7 +132,7 @@ class MovieDetailsUi extends StatelessWidget {
                       child: Text(
                         textAlign: TextAlign.left,
                         maxLines: 3,
-                        popularMovies[index].summary!,
+                        movie.descriptionFull!,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 13,
@@ -133,7 +141,7 @@ class MovieDetailsUi extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     SizedBox(
@@ -143,20 +151,20 @@ class MovieDetailsUi extends StatelessWidget {
                             buttonText: "Add To Watchlist",
                             backgroundColor: Colors.indigoAccent.shade400,
                             onPressed: () {
-                              viewModel.onClickAdd(popularMovies[index]);
+                              viewModel.onClickAddFav(movie);
                             },
                             textcolor: Colors.white)),
-                    SizedBox(
+                    const SizedBox(
                       height: 12,
                     ),
                     Row(
                       children: [
-                        Spacer(
+                        const Spacer(
                           flex: 1,
                         ),
                         Column(
                           children: [
-                            Text(
+                            const Text(
                               "Overall Rating",
                               style: TextStyle(
                                   color: Colors.white,
@@ -164,16 +172,16 @@ class MovieDetailsUi extends StatelessWidget {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              popularMovies[index].rating.toString(),
-                              style: TextStyle(
+                              movie.rating.toString(),
+                              style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold),
                             ),
-                            RatingBar(rating: popularMovies[index].rating / 2),
+                            RatingBar(rating: movie.rating! / 2),
                           ],
                         ),
-                        Spacer(
+                        const Spacer(
                           flex: 1,
                         ),
                         Container(
@@ -181,19 +189,19 @@ class MovieDetailsUi extends StatelessWidget {
                           height: 100, // Adjust height as needed
                           color: Colors.white, // Line color
                         ),
-                        Spacer(
+                        const Spacer(
                           flex: 1,
                         ),
                         Column(
                           children: [
-                            Text(
+                            const Text(
                               "Your Rating",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.bold),
                             ),
-                            Text(
+                            const Text(
                               "0",
                               style: TextStyle(
                                   color: Colors.white,
@@ -203,7 +211,7 @@ class MovieDetailsUi extends StatelessWidget {
                             RatingBar(rating: 0),
                           ],
                         ),
-                        Spacer(
+                        const Spacer(
                           flex: 1,
                         )
                       ],
@@ -211,23 +219,23 @@ class MovieDetailsUi extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    Row(
+                    const Row(
                       children: [
-                        const Text(
+                        Text(
                           "Cast ~",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w500),
                         ),
-                        const Text(
+                        Text(
                           " Writter ~",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 14,
                               fontWeight: FontWeight.w500),
                         ),
-                        const Text(
+                        Text(
                           " Directer",
                           style: TextStyle(
                               color: Colors.white,

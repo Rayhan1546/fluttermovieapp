@@ -1,16 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/data/repository/apicall_function.dart';
+import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
+import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 
 class ListViewBuilder extends StatelessWidget {
   ListViewBuilder({super.key});
 
+  HomepageViewmodel viewmodel = HomePageViewmodelInstance.getInstance();
+
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: ApiCallFunction.popularMovies,
+      valueListenable: HomepageViewmodel.movieList,
       builder: (context, popularMovies, _) {
         if (popularMovies == null || popularMovies.isEmpty) {
           return Center(child: CircularProgressIndicator());
@@ -27,7 +30,7 @@ class ListViewBuilder extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MovieDetailsUi(index: index,),
+                        builder: (context) => MovieDetailsUi(id: popularMovies[index].id!,),
                       ),
                     );
                   },

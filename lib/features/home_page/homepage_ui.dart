@@ -8,15 +8,15 @@ import 'package:mymovieapp/features/home_page/widgets/pageview_builder.dart';
 class HomePageUi extends StatelessWidget {
   HomePageUi({super.key});
 
-  HomePageViewModel viewModel = HomePageViewModel();
+  HomepageViewmodel viewmodel = HomepageViewmodel();
 
   @override
   Widget build(BuildContext context) {
-    viewModel.fetchData();
+    viewmodel.getAllMovies();
     return Scaffold(
       body: Container(
         color: Colors.black,
-        padding: EdgeInsets.fromLTRB(10.0, 60.0, 10, 5.0),
+        padding: EdgeInsets.fromLTRB(10.0, 60.0, 10, 0.0),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: SingleChildScrollView(
