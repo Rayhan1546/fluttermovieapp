@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
-import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 

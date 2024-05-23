@@ -1,25 +1,29 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:mymovieapp/data/implementations/favourite_repository_impl.dart';
-import 'package:mymovieapp/data/models/movie_details_model.dart';
-import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
+import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/data/repository/favourite_repository.dart';
 
 class WatchListViewmodel {
   FavouriteRepository favouriteRepository = FavouriteRepositoryImpl();
 
-  ValueNotifier<List<Movie>> favouriteMovieList = ValueNotifier([]);
+  ValueNotifier<List<WatchListMovieModel>> favouriteMovieList =
+      ValueNotifier([]);
+  ValueNotifier<bool> movieIndicator = ValueNotifier(false);
 
-  Future<void> getFavouriteMovies() async {
-    List<Movie> movies = await favouriteRepository.getFavouriteMovies();
+  Future getFavouriteMovies() async {
+    List<WatchListMovieModel> movies =
+        await favouriteRepository.getFavouriteMovies();
     favouriteMovieList.value = [];
     favouriteMovieList.value = movies;
+    movieIndicator.value = true;
   }
 
-  void onClickAddToFavourite(Movie movie) async {
+  void onClickAddToFavourite(WatchListMovieModel movie) async {
     await favouriteRepository.addToFavourite(movie);
   }
 
-  void onClickRemoveToFavourite(Movie movie) async{
+  void onClickRemoveToFavourite(WatchListMovieModel movie) async {
     await favouriteRepository.removeFromFavourite(movie);
     getFavouriteMovies();
   }

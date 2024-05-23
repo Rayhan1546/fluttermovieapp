@@ -12,7 +12,6 @@ class HomepageViewmodel {
   Future getAllMovies() async {
     PopularMovieListModel popularMovieListModel = await movieRepository.getMovieList();
     movieList.value = popularMovieListModel.data?.movies;
-    print(movieList.value);
   }
 }
 

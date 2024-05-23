@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/features/home_page/homepage_ui.dart';
+import 'package:mymovieapp/features/search_page/search_page_ui.dart';
 import 'package:mymovieapp/features/watch_list/watch_list_ui.dart';
 
 class TransitionPages {
@@ -9,7 +10,7 @@ class TransitionPages {
       case 0:
         return HomePageUi();
       case 1:
-        return Scaffold();
+        return SearchPageUi();
       case 2:
         return WatchListUi();
       case 3:

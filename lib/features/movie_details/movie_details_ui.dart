@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
+import 'package:mymovieapp/data/models/movie_details_model.dart';
+import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/widgets/box_shape_text.dart';
 import 'package:mymovieapp/features/movie_details/widgets/rating_bar.dart';
+import 'package:mymovieapp/features/watch_list/watch_list_viewmodel.dart';
 
 class MovieDetailsUi extends StatelessWidget {
   final int id;
@@ -15,7 +19,7 @@ class MovieDetailsUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     viewModel.getMovieDetails(id);
-    return ValueListenableBuilder(
+    return ValueListenableBuilder<Movie?>(
         valueListenable: viewModel.movieDetails,
         builder: (context, movie, _) {
           if (movie == null) {
@@ -24,7 +28,7 @@ class MovieDetailsUi extends StatelessWidget {
             return SafeArea(
               child: Scaffold(
                   body: Container(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+                padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
                 color: Colors.black,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -41,7 +45,9 @@ class MovieDetailsUi extends StatelessWidget {
                             Navigator.pop(context);
                           },
                         ),
-                        SizedBox(width: 10,),
+                        const SizedBox(
+                          width: 10,
+                        ),
                         const Text(
                           "Movie Details",
                           style: TextStyle(
@@ -55,15 +61,16 @@ class MovieDetailsUi extends StatelessWidget {
                       height: 15,
                     ),
                     Container(
-                        height: MediaQuery.of(context).size.height / 3.5,
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(movie.mediumCoverImage!),
-                            fit: BoxFit.fill,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
-                        )),
+                      height: MediaQuery.of(context).size.height / 3.5,
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: NetworkImage(movie.largeCoverImage!),
+                          fit: BoxFit.fill,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                      ),
+                    ),
                     const SizedBox(
                       height: 6,
                     ),
@@ -151,7 +158,15 @@ class MovieDetailsUi extends StatelessWidget {
                             buttonText: "Add To Watchlist",
                             backgroundColor: Colors.indigoAccent.shade400,
                             onPressed: () {
-                              viewModel.onClickAddFav(movie);
+                              viewModel.onClickAddFav(WatchListMovieModel(
+                                  name: movie.title!,
+                                  image: movie.largeCoverImage!,
+                                  releaseYear: movie.year!.toString(),
+                                  runtime: movie.runtime!.toString(),
+                                  rating: movie.rating!.toString(),
+                                  genres: movie.genres,
+                                  id: movie.id!));
+                              CustomSnackbar.show(context, "Added to Watchlist");
                             },
                             textcolor: Colors.white)),
                     const SizedBox(

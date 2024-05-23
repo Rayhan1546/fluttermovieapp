@@ -5,6 +5,8 @@ import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
 import 'package:mymovieapp/features/home_page/homepage_ui.dart';
 import 'package:mymovieapp/features/login/login_ui.dart';
 import 'package:mymovieapp/features/registation/registation_ui.dart';
+import 'package:mymovieapp/features/search_page/search_page_ui.dart';
+import 'package:mymovieapp/features/see_all/see_all_ui.dart';
 import 'package:mymovieapp/features/watch_list/watch_list_ui.dart';
 
 void main() {
