@@ -12,7 +12,7 @@ import 'package:mymovieapp/features/watch_list/watch_list_viewmodel.dart';
 class SearchPageViewmodel {
   ValueNotifier<List<Movies>?> get searchListMovies => HomepageViewmodel.movieList;
 
-  final Debounce _debounce = Debounce(milliseconds: 500);
+  final Debounce _debounce = Debounce(milliseconds: 300);
   TextEditingController searchController = TextEditingController();
 
   MovieRepository movieRepository = MovieRepositoryImpl();

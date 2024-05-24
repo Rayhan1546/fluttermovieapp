@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
+import 'package:mymovieapp/features/movie_details/shimmer/movie_details_shimmer.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
 import 'package:mymovieapp/features/home_page/homepage_ui.dart';
 import 'package:mymovieapp/features/login/login_ui.dart';

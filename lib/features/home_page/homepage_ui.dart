@@ -19,112 +19,116 @@ class HomePageUi extends StatelessWidget {
         valueListenable: HomepageViewmodel.movieList,
         builder: (context, movielist, _) {
           return Scaffold(
-            body: Container(
-              color: Colors.black,
-              padding: EdgeInsets.fromLTRB(10.0, 60.0, 10, 0.0),
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Row(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Welcome back,',
-                              style: TextStyle(
+            body: SafeArea(
+              child: Container(
+                color: Colors.black,
+                padding: EdgeInsets.fromLTRB(10.0, 10.0, 10, 0.0),
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Welcome back,',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                ),
+                              ),
+                              Text(
+                                'Rayhan Mahmud.',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                          Spacer(),
+                          Icon(
+                            Icons.check_box_outline_blank_rounded,
+                            size: 40,
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      PageViewBuilder(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        children: [
+                          const Text(
+                            "Top Movie Picks",
+                            style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
-                              ),
-                            ),
-                            Text(
-                              'Rayhan Mahmud.',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Icon(
-                          Icons.check_box_outline_blank_rounded,
-                          size: 40,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    PageViewBuilder(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        const Text(
-                          "Top Movie Picks",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Spacer(),
-                        GestureDetector(
-                          child: const  Text(
-                            "See All",
-                            style: TextStyle(color: Colors.white, fontSize: 13),
+                                fontWeight: FontWeight.bold),
                           ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SeeAllUi(),
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListViewBuilder(),
-                    Row(
-                      children: [
-                        const Text(
-                          "Upcoming Movies",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const Spacer(),
-                        GestureDetector(
-                          child: const Text(
-                            "See All",
-                            style: TextStyle(color: Colors.white, fontSize: 13),
+                          Spacer(),
+                          GestureDetector(
+                            child: const Text(
+                              "See All",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SeeAllUi(),
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ListViewBuilder(),
+                      Row(
+                        children: [
+                          const Text(
+                            "Upcoming Movies",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => SeeAllUi(),
-                              ),
-                            );
-                          },
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListViewBuilder(),
-                  ],
+                          const Spacer(),
+                          GestureDetector(
+                            child: const Text(
+                              "See All",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 12),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SeeAllUi(),
+                                ),
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ListViewBuilder(),
+                    ],
+                  ),
                 ),
               ),
             ),

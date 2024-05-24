@@ -6,9 +6,9 @@ import 'package:mymovieapp/common/widgets/elevated_btn.dart';
 import 'package:mymovieapp/data/models/movie_details_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_viewmodel.dart';
+import 'package:mymovieapp/features/movie_details/shimmer/movie_details_shimmer.dart';
 import 'package:mymovieapp/features/movie_details/widgets/box_shape_text.dart';
 import 'package:mymovieapp/features/movie_details/widgets/rating_bar.dart';
-import 'package:mymovieapp/features/watch_list/watch_list_viewmodel.dart';
 
 class MovieDetailsUi extends StatelessWidget {
   final int id;
@@ -23,7 +23,7 @@ class MovieDetailsUi extends StatelessWidget {
         valueListenable: viewModel.movieDetails,
         builder: (context, movie, _) {
           if (movie == null) {
-            return Center(child: CircularProgressIndicator());
+            return MovieDetailsShimmer();
           } else {
             return SafeArea(
               child: Scaffold(

@@ -19,7 +19,6 @@ class WatchListUi extends StatelessWidget {
       valueListenable: viewmodel.favouriteMovieList,
       builder: (context, movies, _) {
         if (movies.isEmpty) {
-          viewmodel.getFavouriteMovies();
           return Container(
               color: Colors.black,
               child: const Center(

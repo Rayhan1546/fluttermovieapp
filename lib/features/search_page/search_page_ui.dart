@@ -177,12 +177,7 @@ class SearchPageUi extends StatelessWidget {
                                                         MediaQuery.of(context)
                                                                 .size
                                                                 .height /
-                                                            30,
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width /
-                                                            2.4,
+                                                            28,
                                                     child: ElevatedBtn(
                                                         fontsize: 15,
                                                         buttonText:
