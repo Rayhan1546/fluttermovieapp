@@ -6,6 +6,7 @@ import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/home_page/widgets/box_shape_text.dart';
+import 'package:mymovieapp/features/home_page/widgets/page_indicator.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 
 class PageViewBuilder extends StatelessWidget {
@@ -16,7 +17,7 @@ class PageViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: HomepageViewmodel.movieList,
+      valueListenable: viewModel.movieList,
       builder: (context, movielist, _) {
         if (movielist == null) {
           return const Center(child: CircularProgressIndicator());
@@ -24,29 +25,38 @@ class PageViewBuilder extends StatelessWidget {
           return const Center(child: Text('No movies available'));
         } else {
           int itemSize = movielist.length > 15 ? 15 : movielist.length;
-          return SizedBox(
-            height: MediaQuery.of(context).size.height / 3.7,
-            child: PageView.builder(
-              itemCount: itemSize,
-              itemBuilder: (context, index) {
-                final movie = movielist[index];
-                return _buildMovieItem(
-                    movie,
-                    index,
-                    MediaQuery.of(context).size.height,
-                    MediaQuery.of(context).size.width,
-                    itemSize,
-                    context);
-              },
-            ),
+          return Stack(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 3.7,
+                child: PageView.builder(
+                  onPageChanged: (int page){
+                    viewModel.pageIndexChage(page);
+                  },
+                  itemCount: itemSize,
+                  itemBuilder: (context, index) {
+                    final movie = movielist[index];
+                    return _buildMovieItem(
+                        movie,
+                        index,
+                        MediaQuery.of(context).size.height,
+                        MediaQuery.of(context).size.width,
+                        itemSize,
+                        context);
+                  },
+                ),
+              ),
+              PageIndicator(itemSize: itemSize, pageIndex: 0),
+            ],
           );
         }
       },
     );
   }
 
-  Widget _buildMovieItem(Movies movie, int pagePosittion, double height,
+  Widget _buildMovieItem(Movies movie, int pagePosition, double height,
       double width, int itemSize, context) {
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -149,10 +159,10 @@ class PageViewBuilder extends StatelessWidget {
                         ),
                         Spacer(),
                         Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              padding: EdgeInsets.zero,
+                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 45),
                               height: height * .038,
                               width: width * .35,
                               decoration: BoxDecoration(
@@ -181,29 +191,6 @@ class PageViewBuilder extends StatelessWidget {
                                     fontWeight: FontWeight.w700,
                                   ),
                                 ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 4,
-                              width: width * .28,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: itemSize,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return Container(
-                                    width: index == pagePosittion ? 10 : 4,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(2),
-                                    ),
-                                  );
-                                },
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return const SizedBox(
-                                    width: 3,
-                                  );
-                                },
                               ),
                             ),
                           ],

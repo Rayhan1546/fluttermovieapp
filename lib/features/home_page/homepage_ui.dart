@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
+import 'package:mymovieapp/features/home_page/shimmer/homepage_shimmer.dart';
 import 'package:mymovieapp/features/home_page/widgets/listview_builder.dart';
 import 'package:mymovieapp/features/home_page/widgets/pageview_builder.dart';
 import 'package:mymovieapp/features/see_all/see_all_ui.dart';
@@ -16,8 +17,9 @@ class HomePageUi extends StatelessWidget {
   Widget build(BuildContext context) {
     viewmodel.getAllMovies();
     return ValueListenableBuilder(
-        valueListenable: HomepageViewmodel.movieList,
+        valueListenable: viewmodel.movieList,
         builder: (context, movielist, _) {
+          if(movielist == null) return HomepageShimmer();
           return Scaffold(
             body: SafeArea(
               child: Container(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
 import 'package:mymovieapp/data/models/movie_details_model.dart';
@@ -12,11 +13,12 @@ class SeeAllUi extends StatelessWidget {
   SeeAllUi({super.key});
 
   SeeAllViewmodel viewmodel = SeeAllViewmodel();
+  HomepageViewmodel homepageViewmodel = HomePageViewmodelInstance.getInstance();
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<Movies>?>(
-      valueListenable: HomepageViewmodel.movieList,
+      valueListenable: homepageViewmodel.movieList,
       builder: (context, movies, _) {
         return SafeArea(
           child: Scaffold(

@@ -11,7 +11,7 @@ class MovieDetailsModel {
   final Data? data;
   final Meta? meta;
 
-  factory MovieDetailsModel.fromJson(Map<String, dynamic> json) {
+  factory MovieDetailsModel.fromJson(Map<String, dynamic> json){
     return MovieDetailsModel(
       status: json["status"],
       statusMessage: json["status_message"],
@@ -19,6 +19,7 @@ class MovieDetailsModel {
       meta: json["@meta"] == null ? null : Meta.fromJson(json["@meta"]),
     );
   }
+
 }
 
 class Data {
@@ -28,11 +29,12 @@ class Data {
 
   final Movie? movie;
 
-  factory Data.fromJson(Map<String, dynamic> json) {
+  factory Data.fromJson(Map<String, dynamic> json){
     return Data(
       movie: json["movie"] == null ? null : Movie.fromJson(json["movie"]),
     );
   }
+
 }
 
 class Movie {
@@ -59,6 +61,7 @@ class Movie {
     required this.smallCoverImage,
     required this.mediumCoverImage,
     required this.largeCoverImage,
+    required this.cast,
     required this.torrents,
     required this.dateUploaded,
     required this.dateUploadedUnix,
@@ -86,11 +89,12 @@ class Movie {
   final String? smallCoverImage;
   final String? mediumCoverImage;
   final String? largeCoverImage;
+  final List<Cast> cast;
   final List<Torrent> torrents;
   final DateTime? dateUploaded;
   final int? dateUploadedUnix;
 
-  factory Movie.fromJson(Map<String, dynamic> json) {
+  factory Movie.fromJson(Map<String, dynamic> json){
     return Movie(
       id: json["id"],
       url: json["url"],
@@ -102,9 +106,7 @@ class Movie {
       year: json["year"],
       rating: json["rating"],
       runtime: json["runtime"],
-      genres: json["genres"] == null
-          ? []
-          : List<String>.from(json["genres"]!.map((x) => x)),
+      genres: json["genres"] == null ? [] : List<String>.from(json["genres"]!.map((x) => x)),
       likeCount: json["like_count"],
       descriptionIntro: json["description_intro"],
       descriptionFull: json["description_full"],
@@ -116,14 +118,37 @@ class Movie {
       smallCoverImage: json["small_cover_image"],
       mediumCoverImage: json["medium_cover_image"],
       largeCoverImage: json["large_cover_image"],
-      torrents: json["torrents"] == null
-          ? []
-          : List<Torrent>.from(
-              json["torrents"]!.map((x) => Torrent.fromJson(x))),
+      cast: json["cast"] == null ? [] : List<Cast>.from(json["cast"]!.map((x) => Cast.fromJson(x))),
+      torrents: json["torrents"] == null ? [] : List<Torrent>.from(json["torrents"]!.map((x) => Torrent.fromJson(x))),
       dateUploaded: DateTime.tryParse(json["date_uploaded"] ?? ""),
       dateUploadedUnix: json["date_uploaded_unix"],
     );
   }
+
+}
+
+class Cast {
+  Cast({
+    required this.name,
+    required this.characterName,
+    required this.urlSmallImage,
+    required this.imdbCode,
+  });
+
+  final String? name;
+  final String? characterName;
+  final String? urlSmallImage;
+  final String? imdbCode;
+
+  factory Cast.fromJson(Map<String, dynamic> json){
+    return Cast(
+      name: json["name"],
+      characterName: json["character_name"],
+      urlSmallImage: json["url_small_image"],
+      imdbCode: json["imdb_code"],
+    );
+  }
+
 }
 
 class Torrent {
@@ -159,7 +184,7 @@ class Torrent {
   final DateTime? dateUploaded;
   final int? dateUploadedUnix;
 
-  factory Torrent.fromJson(Map<String, dynamic> json) {
+  factory Torrent.fromJson(Map<String, dynamic> json){
     return Torrent(
       url: json["url"],
       hash: json["hash"],
@@ -177,6 +202,7 @@ class Torrent {
       dateUploadedUnix: json["date_uploaded_unix"],
     );
   }
+
 }
 
 class Meta {
@@ -192,7 +218,7 @@ class Meta {
   final int? apiVersion;
   final String? executionTime;
 
-  factory Meta.fromJson(Map<String, dynamic> json) {
+  factory Meta.fromJson(Map<String, dynamic> json){
     return Meta(
       serverTime: json["server_time"],
       serverTimezone: json["server_timezone"],
@@ -200,4 +226,5 @@ class Meta {
       executionTime: json["execution_time"],
     );
   }
+
 }

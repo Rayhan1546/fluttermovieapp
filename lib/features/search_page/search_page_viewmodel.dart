@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/common/Instance/watch_list_viewmodel_instance.dart';
 import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
@@ -10,7 +11,9 @@ import 'package:mymovieapp/features/search_page/widgets/debounce.dart';
 import 'package:mymovieapp/features/watch_list/watch_list_viewmodel.dart';
 
 class SearchPageViewmodel {
-  ValueNotifier<List<Movies>?> get searchListMovies => HomepageViewmodel.movieList;
+  HomepageViewmodel viewmodel = HomePageViewmodelInstance.getInstance();
+
+  ValueNotifier<List<Movies>?> get searchListMovies => viewmodel.movieList;
 
   final Debounce _debounce = Debounce(milliseconds: 300);
   TextEditingController searchController = TextEditingController();

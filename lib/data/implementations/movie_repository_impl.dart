@@ -35,7 +35,7 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future<MovieDetailsModel> getMovieDetails(int? id) async {
-    String apiUrl = 'https://yts.mx/api/v2/movie_details.json?movie_id=';
+    String apiUrl = 'https://yts.mx/api/v2/movie_details.json?with_images=true&with_cast=true&movie_id=';
     apiUrl = apiUrl + '$id';
 
     final response = await http.get(Uri.parse(apiUrl));

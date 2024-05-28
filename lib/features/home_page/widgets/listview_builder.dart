@@ -14,7 +14,7 @@ class ListViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: HomepageViewmodel.movieList,
+      valueListenable: viewmodel.movieList,
       builder: (context, popularMovies, _) {
         if (popularMovies == null || popularMovies.isEmpty) {
           return Center(child: CircularProgressIndicator());
