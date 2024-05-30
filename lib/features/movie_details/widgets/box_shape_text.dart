@@ -23,7 +23,7 @@ class BoxShapeText extends StatelessWidget {
             child: Text(
               text,
               style: const TextStyle(
-                color: Colors.white, // Color of the text
+                color: Colors.white,
                 fontSize: 12,
               ),
             ),
