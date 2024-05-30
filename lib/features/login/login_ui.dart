@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +30,7 @@ class LoginUi extends StatelessWidget {
         body: Container(
           height: MediaQuery.of(context).size.height,
           color: Colors.black87,
-          padding: EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: SingleChildScrollView(
             child: Column(
               children: [

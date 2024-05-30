@@ -10,8 +10,8 @@ class PopularMovieListModel {
   PopularMovieListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     statusMessage = json['status_message'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    meta = json['@meta'] != null ? new Meta.fromJson(json['@meta']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    meta = json['@meta'] != null ? Meta.fromJson(json['@meta']) : null;
   }
 }
 
@@ -30,7 +30,7 @@ class Data {
     if (json['movies'] != null) {
       movies = <Movies>[];
       json['movies'].forEach((v) {
-        movies!.add(new Movies.fromJson(v));
+        movies!.add(Movies.fromJson(v));
       });
     }
   }
@@ -120,7 +120,7 @@ class Movies {
     if (json['torrents'] != null) {
       torrents = <Torrents>[];
       json['torrents'].forEach((v) {
-        torrents!.add(new Torrents.fromJson(v));
+        torrents!.add(Torrents.fromJson(v));
       });
     }
     dateUploaded = json['date_uploaded'];

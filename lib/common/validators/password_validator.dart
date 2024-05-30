@@ -5,8 +5,9 @@ class PasswordValidator {
   static bool passwordIsRight = true;
 
   static isValid(String password) {
-    if (passwordErrorMessage(password) == null && password.isNotEmpty)
+    if (passwordErrorMessage(password) == null && password.isNotEmpty) {
       return true;
+    }
     if (password.isEmpty) return false;
   }
 

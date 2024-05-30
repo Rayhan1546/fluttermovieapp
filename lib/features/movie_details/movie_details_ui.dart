@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
 import 'package:mymovieapp/data/models/movie_details_model.dart';
@@ -24,12 +22,12 @@ class MovieDetailsUi extends StatelessWidget {
         valueListenable: MovieDetailsViewModel.movieDetails,
         builder: (context, movie, _) {
           if (movie == null) {
-            return MovieDetailsShimmer();
+            return const MovieDetailsShimmer();
           } else {
             return SafeArea(
               child: Scaffold(
                   body: Container(
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 20),
+                padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
                 color: Colors.black,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -44,6 +42,7 @@ class MovieDetailsUi extends StatelessWidget {
                               color: Colors.white,
                             ),
                             onTap: () {
+                              viewModel.onClickClean();
                               Navigator.pop(context);
                             },
                           ),
@@ -63,28 +62,28 @@ class MovieDetailsUi extends StatelessWidget {
                         height: 15,
                       ),
                       Container(
-                        height: MediaQuery.of(context).size.height / 3.5,
+                        height: MediaQuery.of(context).size.height / 4,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                            image: NetworkImage(movie.largeCoverImage!),
+                            image: NetworkImage(movie.largeCoverImage ?? ""),
                             fit: BoxFit.fill,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(12.0)),
+                          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
                         ),
                       ),
                       const SizedBox(
                         height: 6,
                       ),
-                      Container(
+                      SizedBox(
                         height: 20,
                         child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: movie.genres!.length,
+                            itemCount: movie.genres.length,
                             itemBuilder: (context, genreIndex) {
                               final isLastItem =
-                                  genreIndex == movie.genres!.length - 1;
-                              String genre = movie.genres![genreIndex];
+                                  genreIndex == movie.genres.length - 1;
+                              String genre = movie.genres[genreIndex];
                               return isLastItem
                                   ? Text(genre,
                                       style: const TextStyle(
@@ -92,7 +91,7 @@ class MovieDetailsUi extends StatelessWidget {
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600))
                                   : Text(
-                                      genre + " ~ ",
+                                      "$genre ~ ",
                                       style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
@@ -100,19 +99,32 @@ class MovieDetailsUi extends StatelessWidget {
                                     );
                             }),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          textAlign: TextAlign.left,
-                          maxLines: 1,
-                          movie.title!,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 300,
+                            child: Text(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              movie.title ?? "",
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
+                          GestureDetector(
+                            onTap: (){
+                              viewModel.onClickTorrentLaunch(movie.torrents[0].url);
+                            },
+                            child: const Icon(Icons.download_outlined,
+                                size: 30, color: Colors.white),
+                          )
+                        ],
                       ),
                       const SizedBox(
                         height: 6,
@@ -155,7 +167,7 @@ class MovieDetailsUi extends StatelessWidget {
                       ),
                       SizedBox(
                           width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height / 15,
+                          height: MediaQuery.of(context).size.height / 16,
                           child: ElevatedBtn(
                               buttonText: "Add To Watchlist",
                               backgroundColor: Colors.indigoAccent.shade400,
@@ -168,7 +180,8 @@ class MovieDetailsUi extends StatelessWidget {
                                     rating: movie.rating!.toString(),
                                     genres: movie.genres,
                                     id: movie.id!));
-                                CustomSnackbar.show(context, "Added to Watchlist");
+                                CustomSnackbar.show(
+                                    context, "Added to Watchlist");
                               },
                               textcolor: Colors.white)),
                       const SizedBox(
@@ -185,15 +198,21 @@ class MovieDetailsUi extends StatelessWidget {
                                 "Overall Rating",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 5,
                               ),
                               Text(
                                 movie.rating.toString(),
                                 style: const TextStyle(
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 5,
                               ),
                               RatingBar(rating: movie.rating! / 2),
                             ],
@@ -203,27 +222,33 @@ class MovieDetailsUi extends StatelessWidget {
                           ),
                           Container(
                             width: 2,
-                            height: 100, // Adjust height as needed
-                            color: Colors.white, // Line color
+                            height: MediaQuery.of(context).size.height / 9,
+                            color: Colors.white,
                           ),
                           const Spacer(
                             flex: 1,
                           ),
-                          Column(
+                          const Column(
                             children: [
-                              const Text(
+                              Text(
                                 "Your Rating",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
-                              const Text(
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
                                 "0",
                                 style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: 5,
                               ),
                               RatingBar(rating: 0),
                             ],
@@ -264,10 +289,13 @@ class MovieDetailsUi extends StatelessWidget {
                             "See All",
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 14,
+                                fontSize: 12,
                                 fontWeight: FontWeight.w500),
                           ),
                         ],
+                      ),
+                      const SizedBox(
+                        height: 10,
                       ),
                       CastView(),
                     ],

@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
-import 'package:mymovieapp/features/home_page/shimmer/homepage_shimmer.dart';
-import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
-import 'package:mymovieapp/features/movie_details/shimmer/movie_details_shimmer.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
-import 'package:mymovieapp/features/home_page/homepage_ui.dart';
-import 'package:mymovieapp/features/login/login_ui.dart';
-import 'package:mymovieapp/features/registation/registation_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:mymovieapp/features/search_page/search_page_ui.dart';
-import 'package:mymovieapp/features/see_all/see_all_ui.dart';
-import 'package:mymovieapp/features/watch_list/watch_list_ui.dart';
+import 'package:mymovieapp/main_viewmodel.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({Key? key}) : super(key: key);
+
+  MainViewmodel viewmodel = MainViewmodel.getInstance();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      home: PageTransitionUi(),
-    );
+    return ValueListenableBuilder(
+        valueListenable: viewmodel.language,
+        builder: (context, language, _) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.green,
+            ),
+            home: PageTransitionUi(),
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
+            supportedLocales: AppLocalizations.supportedLocales,
+            locale: Locale.fromSubtags(
+              languageCode: language.getLocal(),
+            ),
+          );
+        });
   }
 }

@@ -7,7 +7,7 @@ class PrimaryPassField extends StatelessWidget {
   final String? errortext;
   final String label;
 
-  PrimaryPassField({super.key, required this.controller, required this.obsecurebool,required this.onpressed,
+  const PrimaryPassField({super.key, required this.controller, required this.obsecurebool,required this.onpressed,
   required this.errortext, required this.label});
 
 
@@ -24,7 +24,7 @@ class PrimaryPassField extends StatelessWidget {
         filled: true,
         fillColor: Colors.white10,
         suffixIcon: IconButton(
-          icon: obsecurebool ? Icon(Icons.visibility_off) : Icon(Icons.visibility),
+          icon: obsecurebool ? const Icon(Icons.visibility_off) : const Icon(Icons.visibility),
           onPressed: onpressed,
         ),
         border: OutlineInputBorder(

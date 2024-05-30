@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
-import 'package:mymovieapp/data/models/movie_details_model.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
@@ -26,7 +24,7 @@ class SeeAllUi extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               color: Colors.black,
-              padding: EdgeInsets.fromLTRB(10, 5, 10, 20),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
               child: Column(
                 children: [
                   Row(
@@ -63,8 +61,8 @@ class SeeAllUi extends StatelessWidget {
                         final movie = movies?[index];
                         return Container(
                           height: MediaQuery.of(context).size.height / 6,
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.all(4),
+                          margin: const EdgeInsets.only(top: 10),
+                          padding: const EdgeInsets.all(4),
                           decoration: BoxDecoration(
                             color: Colors.white10,
                             borderRadius: BorderRadius.circular(10),
@@ -119,7 +117,7 @@ class SeeAllUi extends StatelessWidget {
                                     ),
                                     Row(
                                       children: [
-                                        Spacer(),
+                                        const Spacer(),
                                         SizedBox(
                                           height: MediaQuery.of(context)
                                                   .size

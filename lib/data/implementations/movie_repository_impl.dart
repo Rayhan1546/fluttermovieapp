@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<PopularMovieListModel> getMovieList() async {
-    final movieUrl =
+    const movieUrl =
         'https://yts.mx/api/v2/list_movies.json?sort_by=topmovies&order_by=desc';
     final response = await http.get(Uri.parse(movieUrl));
     if (response.statusCode == 200) {
@@ -36,7 +36,7 @@ class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<MovieDetailsModel> getMovieDetails(int? id) async {
     String apiUrl = 'https://yts.mx/api/v2/movie_details.json?with_images=true&with_cast=true&movie_id=';
-    apiUrl = apiUrl + '$id';
+    apiUrl = '$apiUrl$id';
 
     final response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {

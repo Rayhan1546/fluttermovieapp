@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
-import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
+import 'package:mymovieapp/features/search_page/filter_page/filter_page_ui.dart';
 import 'package:mymovieapp/features/search_page/search_page_viewmodel.dart';
 
 class SearchPageUi extends StatelessWidget {
@@ -24,21 +22,36 @@ class SearchPageUi extends StatelessWidget {
                 color: Colors.black,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.fromLTRB(10, 15, 10, 0),
+                padding: const EdgeInsets.fromLTRB(10, 15, 10, 0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
-                      "Search.",
-                      style: TextStyle(
-                          fontSize: 25,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                    Row(
+                      children: [
+                        const Text(
+                          "Search.",
+                          style: TextStyle(
+                              fontSize: 25,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            FilterPageUi.showFilterModal(context);
+                          },
+                          child: const Icon(
+                            Icons.manage_search,
+                            color: Colors.white,
+                            size: 35,
+                          ),
+                        )
+                      ],
                     ),
                     const SizedBox(
                       height: 15,
                     ),
-                    Container(
+                    SizedBox(
                       height: 45,
                       child: TextField(
                         controller: viewmodel.searchController,
@@ -59,8 +72,8 @@ class SearchPageUi extends StatelessWidget {
                             borderRadius: BorderRadius.circular(50.0),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                BorderSide(color: Colors.white70, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: Colors.white70, width: 2.0),
                             borderRadius: BorderRadius.circular(50),
                           ),
                         ),
@@ -81,18 +94,20 @@ class SearchPageUi extends StatelessWidget {
                     ),
                     movies == null
                         ? const Expanded(
-                          child: Center(
+                            child: Center(
                               child: Text(
                                 "No matched Result",
-                                style:
-                                    TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.w500),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.w500),
                               ),
                             ),
-                        )
+                          )
                         : Expanded(
                             child: ListView.builder(
                               padding: EdgeInsets.zero,
-                              itemCount: movies?.length,
+                              itemCount: movies.length,
                               itemBuilder: (context, index) {
                                 return GestureDetector(
                                   onTap: () {
@@ -108,8 +123,8 @@ class SearchPageUi extends StatelessWidget {
                                   child: Container(
                                     height:
                                         MediaQuery.of(context).size.height / 6,
-                                    margin: EdgeInsets.only(top: 10),
-                                    padding: EdgeInsets.all(4),
+                                    margin: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       color: Colors.white10,
                                       borderRadius: BorderRadius.circular(10),
@@ -122,7 +137,7 @@ class SearchPageUi extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(8),
                                           child: Image.network(
-                                            movies![index].largeCoverImage!,
+                                            movies[index].largeCoverImage!,
                                             width: MediaQuery.of(context)
                                                     .size
                                                     .height *
@@ -171,7 +186,7 @@ class SearchPageUi extends StatelessWidget {
                                               ),
                                               Row(
                                                 children: [
-                                                  Spacer(),
+                                                  const Spacer(),
                                                   SizedBox(
                                                     height:
                                                         MediaQuery.of(context)

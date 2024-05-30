@@ -1,13 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class BoxShapeText extends StatelessWidget {
   final String text;
 
-  BoxShapeText({super.key, required this.text});
+  const BoxShapeText({super.key, required this.text});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +18,7 @@ class BoxShapeText extends StatelessWidget {
       ),
       child: Center(
         child: Container(
-          padding: EdgeInsets.fromLTRB(10, 2, 10, 2),
+          padding: const EdgeInsets.fromLTRB(10, 2, 10, 2),
           child: Center(
             child: Text(
               text,

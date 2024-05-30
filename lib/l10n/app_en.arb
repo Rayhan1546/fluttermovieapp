@@ -1,0 +1,11 @@
+{
+    "welcome": "Welcome Back",
+    "movie_hub":"Movie HUB",
+    "search": "Search",
+    "favourite_movie": "favourite_movie",
+    "top_movie": "Top Movie",
+    "upcoming_movie": "Upcoming Movie",
+    "see_all": "See All",
+    "no_movie_found": "No movie is founds",
+    "add_to_favorite":"Add to Favorites"
+}

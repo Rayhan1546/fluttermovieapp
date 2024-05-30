@@ -2,13 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/Instance/watch_list_viewmodel_instance.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
-import 'package:mymovieapp/data/models/movie_details_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 import 'package:mymovieapp/features/watch_list/watch_list_viewmodel.dart';
 
 class WatchListUi extends StatelessWidget {
-  WatchListUi({Key? key}) : super(key: key);
+  WatchListUi({super.key});
 
   WatchListViewmodel viewmodel = WatchListViewmodelInstance.getInstance();
 
@@ -66,8 +65,8 @@ class WatchListUi extends StatelessWidget {
                             },
                             child: Container(
                               height: MediaQuery.of(context).size.height / 6,
-                              margin: EdgeInsets.all(5),
-                              padding: EdgeInsets.all(4),
+                              margin: const EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
                                 color: Colors.white60,
                                 borderRadius: BorderRadius.circular(10),
@@ -86,7 +85,7 @@ class WatchListUi extends StatelessWidget {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                  SizedBox(width: 10),
+                                  const SizedBox(width: 10),
                                   Expanded(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,7 +98,7 @@ class WatchListUi extends StatelessWidget {
                                               fontWeight: FontWeight.bold,
                                               color: Colors.black),
                                         ),
-                                        SizedBox(height: 5),
+                                        const SizedBox(height: 5),
                                         Text(
                                           movie.releaseYear,
                                           style: const TextStyle(
@@ -109,7 +108,7 @@ class WatchListUi extends StatelessWidget {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
-                                          'Genres: ${movie.genres!.join(", ")}',
+                                          'Genres: ${movie.genres.join(", ")}',
                                           style: const TextStyle(
                                             fontSize: 14,
                                             color: Colors.black,
@@ -122,7 +121,7 @@ class WatchListUi extends StatelessWidget {
                                         ),
                                         Row(
                                           children: [
-                                            Spacer(),
+                                            const Spacer(),
                                             SizedBox(
                                               height: MediaQuery.of(context)
                                                       .size

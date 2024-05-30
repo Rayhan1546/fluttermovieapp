@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class ElevatedBtn extends StatelessWidget {
 
@@ -9,7 +8,7 @@ class ElevatedBtn extends StatelessWidget {
   final VoidCallback onPressed;
   final double? fontsize;
 
-  ElevatedBtn({
+  const ElevatedBtn({super.key, 
     required this.buttonText,
     required this.backgroundColor,
     required this.onPressed,
@@ -24,7 +23,7 @@ class ElevatedBtn extends StatelessWidget {
         backgroundColor: backgroundColor, // Background color
         foregroundColor: textcolor, // Text color
         textStyle: TextStyle(
-          fontSize: fontsize == null ? 20 : fontsize,
+          fontSize: fontsize ?? 20,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12), // Box shape
@@ -32,7 +31,7 @@ class ElevatedBtn extends StatelessWidget {
       ),
       child: Text(
         buttonText,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }

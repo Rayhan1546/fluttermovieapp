@@ -15,7 +15,7 @@ class SearchPageViewmodel {
 
   ValueNotifier<List<Movies>?> get searchListMovies => viewmodel.movieList;
 
-  final Debounce _debounce = Debounce(milliseconds: 300);
+  final Debounce _debounce = Debounce(milliseconds: 200);
   TextEditingController searchController = TextEditingController();
 
   MovieRepository movieRepository = MovieRepositoryImpl();

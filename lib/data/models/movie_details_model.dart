@@ -80,7 +80,7 @@ class Movie {
   final List<String> genres;
   final int? likeCount;
   final String? descriptionIntro;
-  final String? descriptionFull;
+  final String descriptionFull;
   final String? ytTrailerCode;
   final String? language;
   final String? mpaRating;
@@ -109,7 +109,7 @@ class Movie {
       genres: json["genres"] == null ? [] : List<String>.from(json["genres"]!.map((x) => x)),
       likeCount: json["like_count"],
       descriptionIntro: json["description_intro"],
-      descriptionFull: json["description_full"],
+      descriptionFull: json["description_full"] ?? "",
       ytTrailerCode: json["yt_trailer_code"],
       language: json["language"],
       mpaRating: json["mpa_rating"],

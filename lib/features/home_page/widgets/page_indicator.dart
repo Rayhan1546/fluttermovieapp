@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 
 class PageIndicator extends StatelessWidget {
   final int itemSize;
   final int pageIndex;
 
-  PageIndicator({super.key, required this.itemSize, required this.pageIndex});
+  const PageIndicator({super.key, required this.itemSize, required this.pageIndex});
 
   @override
   Widget build(BuildContext context) {

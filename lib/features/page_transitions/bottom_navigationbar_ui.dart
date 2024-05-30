@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavigationBarUi extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onTap;
-  BottomNavigationBarUi({Key? key, required this.selectedIndex, required this.onTap});
+  const BottomNavigationBarUi({super.key, required this.selectedIndex, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

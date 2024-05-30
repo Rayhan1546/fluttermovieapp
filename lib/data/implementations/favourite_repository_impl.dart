@@ -1,5 +1,4 @@
 import 'package:mymovieapp/data/local/local_data_source.dart';
-import 'package:mymovieapp/data/models/movie_details_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/data/repository/favourite_repository.dart';
 

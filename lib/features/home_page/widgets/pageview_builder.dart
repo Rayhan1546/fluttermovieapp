@@ -10,7 +10,7 @@ import 'package:mymovieapp/features/home_page/widgets/page_indicator.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 
 class PageViewBuilder extends StatelessWidget {
-  PageViewBuilder({Key? key}) : super(key: key);
+  PageViewBuilder({super.key});
 
   HomepageViewmodel viewModel = HomePageViewmodelInstance.getInstance();
 
@@ -92,7 +92,7 @@ class PageViewBuilder extends StatelessWidget {
                   filter: ImageFilter.blur(sigmaX: 3.0, sigmaY: 3.0),
                   // Adjust blur intensity as needed
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                     height: height * .10,
                     decoration: const BoxDecoration(
                       color: Colors.white12,
@@ -109,7 +109,7 @@ class PageViewBuilder extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: width / 2.6,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,8 +129,8 @@ class PageViewBuilder extends StatelessWidget {
                               ),
                               Text(
                                 movie.genres!.length > 3
-                                    ? '${movie.genres!.sublist(0, 3).join(", ")}'
-                                    : '${movie.genres!.join(", ")}',
+                                    ? movie.genres!.sublist(0, 3).join(", ")
+                                    : movie.genres!.join(", "),
                                 style: const TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,
@@ -147,7 +147,7 @@ class PageViewBuilder extends StatelessWidget {
                                     width: 8,
                                   ),
                                   BoxShapeText(
-                                      text: movie.runtime.toString() + 'm'),
+                                      text: '${movie.runtime}m'),
                                   const SizedBox(
                                     width: 8,
                                   ),
@@ -157,7 +157,7 @@ class PageViewBuilder extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [

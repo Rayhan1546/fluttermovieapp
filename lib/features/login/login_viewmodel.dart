@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/validators/email_validator.dart';
 import 'package:mymovieapp/common/validators/password_validator.dart';

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/features/home_page/homepage_ui.dart';
 import 'package:mymovieapp/features/page_transitions/widgets/transition_pages.dart';
 
 class BottomNavigationBarViewModel {

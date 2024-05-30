@@ -1,4 +1,3 @@
-import 'package:mymovieapp/data/models/movie_details_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 
 abstract class FavouriteRepository {

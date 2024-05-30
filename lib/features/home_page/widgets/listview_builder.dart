@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
@@ -17,9 +16,9 @@ class ListViewBuilder extends StatelessWidget {
       valueListenable: viewmodel.movieList,
       builder: (context, popularMovies, _) {
         if (popularMovies == null || popularMovies.isEmpty) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else {
-          return Container(
+          return SizedBox(
             height: MediaQuery.of(context).size.height * .30,
             width: MediaQuery.of(context).size.width,
             child: ListView.builder(
@@ -39,7 +38,7 @@ class ListViewBuilder extends StatelessWidget {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 0.34,
-                        margin: EdgeInsets.fromLTRB(0.0, 0.0, 14.0, 0.0),
+                        margin: const EdgeInsets.fromLTRB(0.0, 0.0, 14.0, 0.0),
                         child: Column(
                           children: [
                             ClipRRect(

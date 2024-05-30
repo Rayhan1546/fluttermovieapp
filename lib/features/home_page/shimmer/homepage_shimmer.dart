@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomepageShimmer extends StatelessWidget {
@@ -14,7 +13,7 @@ class HomepageShimmer extends StatelessWidget {
         backgroundColor: Colors.black,
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Shimmer.fromColors(
               baseColor: Colors.grey[600]!,
               highlightColor: Colors.grey[100]!,
@@ -60,7 +59,7 @@ class HomepageShimmer extends StatelessWidget {
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(5)),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: height * .015,
                         width: width / 4.5,
@@ -86,7 +85,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Container(
                             height: height * .020,
                             width: width / 4,
@@ -94,7 +93,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Container(
                             height: height * .015,
                             width: width / 5,
@@ -104,7 +103,7 @@ class HomepageShimmer extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(width: 10,),
+                      const SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -115,7 +114,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Container(
                             height: height * .020,
                             width: width / 4,
@@ -123,7 +122,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Container(
                             height: height * .015,
                             width: width / 5,
@@ -133,7 +132,7 @@ class HomepageShimmer extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(width: 10,),
+                      const SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -144,7 +143,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Container(
                             height: height * .020,
                             width: width / 4.5,
@@ -152,7 +151,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Container(
                             height: height * .015,
                             width: width / 5,
@@ -164,7 +163,7 @@ class HomepageShimmer extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 15,),
+                  const SizedBox(height: 15,),
                   Row(
                     children: [
                       Container(
@@ -174,7 +173,7 @@ class HomepageShimmer extends StatelessWidget {
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(5)),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         height: height * .015,
                         width: width / 4.5,
@@ -200,7 +199,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Container(
                             height: height * .020,
                             width: width / 4,
@@ -208,7 +207,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Container(
                             height: height * .015,
                             width: width / 5,
@@ -218,7 +217,7 @@ class HomepageShimmer extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(width: 10,),
+                      const SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -229,7 +228,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Container(
                             height: height * .020,
                             width: width / 4,
@@ -237,7 +236,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Container(
                             height: height * .015,
                             width: width / 5,
@@ -247,7 +246,7 @@ class HomepageShimmer extends StatelessWidget {
                           )
                         ],
                       ),
-                      SizedBox(width: 10,),
+                      const SizedBox(width: 10,),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -258,7 +257,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(10)),
                           ),
-                          SizedBox(height: 5,),
+                          const SizedBox(height: 5,),
                           Container(
                             height: height * .020,
                             width: width / 4.5,
@@ -266,7 +265,7 @@ class HomepageShimmer extends StatelessWidget {
                                 color: Colors.grey,
                                 borderRadius: BorderRadius.circular(5)),
                           ),
-                          SizedBox(height: 3,),
+                          const SizedBox(height: 3,),
                           Container(
                             height: height * .015,
                             width: width / 5,
