@@ -1,10 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/features/search_page/filter_page/filter_page_viewmodel.dart';
 import 'package:mymovieapp/features/search_page/filter_page/widgets/box_container_text.dart';
+import 'package:mymovieapp/features/search_page/filter_page/widgets/enums.dart';
 
-class FilterPageUi {
-  static void showFilterModal(BuildContext context) {
-    FilterPageViewmodel viewmodel = FilterPageViewmodel.getInstance();
+class FilterPageUi extends StatelessWidget {
+  FilterPageUi({Key? key});
+
+  FilterPageViewmodel viewmodel = FilterPageViewmodel.getInstance();
+
+  @override
+  Widget build(BuildContext context) {
+    return showFilterModal(context);
+  }
+
+  showFilterModal(BuildContext context) {
     showModalBottomSheet<void>(
       context: context,
       backgroundColor: Colors.grey[800],
@@ -12,7 +21,7 @@ class FilterPageUi {
         return SingleChildScrollView(
           child: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            height: MediaQuery.of(context).size.height * .60,
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,9 +29,10 @@ class FilterPageUi {
                 const Text(
                   'Sort and Filter',
                   style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w800),
+                    fontSize: 20,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 const Divider(
                   color: Colors.white60,
@@ -32,130 +42,156 @@ class FilterPageUi {
                 const Text(
                   'Sort By',
                   style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500),
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {},
-                      child: BoxContainerText(
-                        text: 'Year',
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: BoxContainerText(text: 'Rating'),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: BoxContainerText(text: 'Date'),
-                    ),
-                    InkWell(
-                      onTap: () {},
-                      child: BoxContainerText(text: 'Like_count'),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
+                const SizedBox(height: 8),
+                sortByWidget(),
+                const SizedBox(height: 10),
                 const Divider(
                   color: Colors.white60,
                   height: 20,
                   thickness: 2,
                 ),
-                ValueListenableBuilder(
-                    valueListenable: viewmodel.genreFilters,
-                    builder: (context, value, _) {
-                      return Wrap(
-                        direction: Axis.horizontal,
-                        spacing: 8.0,
-                        children: value
-                            .map((e) => ChoiceChip(
-                                  label: Text(e.genre.name),
-                                  selected: e.isSelected,
-                                  onSelected: (isSelected) {
-                                    viewmodel.onClickedGenreFilter(
-                                      e,
-                                      isSelected,
-                                    );
-                                  },
-                                ))
-                            .toList(),
-                      );
-                    }),
                 const Text(
-                  'Sorted By',
+                  'Genres',
                   style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                ValueListenableBuilder(
-                  valueListenable: viewmodel.sortBy,
-                  builder: (context, value, _) {
-                    return Row(
-                        children: SortBy.values
-                        .where((e) => e != SortBy.none)
-                            .map(
-                              (e) => ChoiceChip(
-                                label: Text(e.name),
-                                selected: e.name == value.name,
-                                onSelected: (isSelected) {
-                                  viewmodel.onChangedSortBy(e);
-                                },
-                              ),
-                            )
-                            .toList());
-                  },
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Container(
-                    height: 30,
-                    width: MediaQuery.of(context).size.width / 4,
-                    decoration: BoxDecoration(
-                      color: Colors.indigo,
-                      border: Border.all(
-                        color:
-                            Colors.indigoAccent, // Border color// Border width
-                      ),
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: InkWell(
-                      onTap: () {
-                        print("Apply");
-                      },
-                      child: const Center(
-                        child: Text(
-                          'Apply',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 17,
-                              fontWeight: FontWeight.w800),
-                        ),
-                      ),
-                    ),
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
                   ),
-                )
+                ),
+                const SizedBox(height: 10),
+                genreWidget(),
+                const SizedBox(height: 10),
+                const Divider(
+                  color: Colors.white60,
+                  height: 20,
+                  thickness: 2,
+                ),
+                const Text(
+                  'Order By',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                sortedByWidget(),
+                applyBtn(context),
               ],
             ),
           ),
         );
       },
+    );
+  }
+
+  Widget sortByWidget() {
+    return ValueListenableBuilder(
+      valueListenable: viewmodel.sortBy,
+      builder: (context, value, _) {
+        return Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: SortBy.values
+              .map(
+                (e) => BoxContainerText(
+                  text: e.name,
+                  isSelected: e.name == value.name,
+                  onClicked: () {
+                    viewmodel.onChangedSortBy(e);
+                  },
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget genreWidget() {
+    return ValueListenableBuilder(
+      valueListenable: viewmodel.genreFilters,
+      builder: (context, value, _) {
+        return Wrap(
+          crossAxisAlignment: WrapCrossAlignment.start,
+          runSpacing: 10,
+          spacing: 13,
+          direction: Axis.horizontal,
+          children: value
+              .map(
+                (e) => BoxContainerText(
+                  text: e.genre.name,
+                  isSelected: e.isSelected,
+                  onClicked: () {
+                    viewmodel.onClickedGenreFilter(
+                      e,
+                      !e.isSelected,
+                    );
+                  },
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget sortedByWidget() {
+    return ValueListenableBuilder(
+      valueListenable: viewmodel.sortedBy,
+      builder: (context, value, _) {
+        return Wrap(
+          spacing: 10,
+          children: SortedBy.values
+              .map(
+                (e) => BoxContainerText(
+                  text: e.name,
+                  isSelected: e.name == value.name,
+                  onClicked: () {
+                    viewmodel.onChangedSortedBy(e);
+                  },
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
+
+  Widget applyBtn(context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        height: 30,
+        width: MediaQuery.of(context).size.width / 4,
+        decoration: BoxDecoration(
+          color: Colors.indigo,
+          border: Border.all(
+            color: Colors.indigoAccent, // Border color
+          ),
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: InkWell(
+          onTap: () {
+            print("Apply");
+          },
+          child: const Center(
+            child: Text(
+              'Apply',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.w800,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

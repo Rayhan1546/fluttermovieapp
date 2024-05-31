@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mymovieapp/features/search_page/filter_page/widgets/enums.dart';
 
 class FilterPageViewmodel {
   static FilterPageViewmodel? filterPageViewmodel;
@@ -8,7 +9,13 @@ class FilterPageViewmodel {
     return filterPageViewmodel!;
   }
 
-  ValueNotifier<SortBy> sortBy = ValueNotifier(SortBy.none);
+  ValueNotifier<SortedBy> sortedBy = ValueNotifier(SortedBy.desc);
+
+  void onChangedSortedBy(SortedBy sortedBy) {
+    this.sortedBy.value = sortedBy;
+  }
+
+  ValueNotifier<SortBy> sortBy = ValueNotifier(SortBy.like_count);
 
   void onChangedSortBy(SortBy sortBy) {
     this.sortBy.value = sortBy;
@@ -20,7 +27,6 @@ class FilterPageViewmodel {
       .toList());
 
   void onClickedGenreFilter(GenreFilterModel model, isSelected) {
-    //GenreFilterModel? genreFilter = genreFilters.value.firstWhere((e) => e == model);
     model.isSelected = isSelected;
     genreFilters.value = [...genreFilters.value];
   }
@@ -31,41 +37,12 @@ class FilterPageViewmodel {
         .map((e) => e.genre.name)
         .toList();
   }
-}
 
-enum SortBy { none, asc, desc }
+  String getSelectedSortBy() {
+    return sortBy.value.name;
+  }
 
-class GenreFilterModel {
-  Genre genre;
-  bool isSelected;
-
-  GenreFilterModel({
-    required this.genre,
-    required this.isSelected,
-  });
-}
-
-enum Genre {
-  none,
-  action,
-  animation,
-  horror,
-  crime,
-  history,
-  comedy,
-  sciFi,
-  fantasy,
-  adventure,
-  war;
-
-  String getName() {
-    switch (this) {
-      case Genre.none:
-        return "";
-      case Genre.action:
-        return "Action";
-      default:
-        return "Sci-FI";
-    }
+  String getSelectedSortedBy() {
+    return sortedBy.value.name;
   }
 }

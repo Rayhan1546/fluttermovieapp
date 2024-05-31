@@ -6,37 +6,34 @@ class BoxContainerText extends StatelessWidget {
   final VoidCallback? onClicked;
 
   const BoxContainerText({
-    super.key,
+    Key? key, // Add key parameter
     required this.text,
     this.isSelected = false,
-    this.onClicked
-  });
+    this.onClicked,
+  }) : super(key: key); // Set the key parameter in super constructor
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: (isSelected == true)? Colors.black : Colors.transparent,
-        border: Border.all(
-          color: Colors.white, // Border color
-          width: 1.2, // Border width
-        ),
-        borderRadius: BorderRadius.circular(100),
-      ),
+    return Material( // Wrap with Material widget
+      color: Colors.transparent,
       child: InkWell(
         hoverColor: Colors.grey,
         onTap: onClicked,
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.fromLTRB(12, 3, 12, 3),
-            child: Center(
-              child: Text(
-                text,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                ),
-              ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: (isSelected == true)? Colors.black : Colors.transparent,
+            border: Border.all(
+              color: Colors.white, // Border color
+              width: 1.2, // Border width
+            ),
+            borderRadius: BorderRadius.circular(100),
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+          child: Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 15,
             ),
           ),
         ),

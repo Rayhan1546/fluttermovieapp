@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.green,
             ),
-            home: SearchPageUi(),
+            home: PageTransitionUi(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale.fromSubtags(

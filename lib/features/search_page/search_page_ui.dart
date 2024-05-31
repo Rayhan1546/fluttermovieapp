@@ -38,7 +38,7 @@ class SearchPageUi extends StatelessWidget {
                         const Spacer(),
                         GestureDetector(
                           onTap: () {
-                            FilterPageUi.showFilterModal(context);
+                            FilterPageUi().showFilterModal(context);
                           },
                           child: const Icon(
                             Icons.manage_search,
