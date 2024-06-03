@@ -18,7 +18,7 @@ class HomePageUi extends StatelessWidget {
     return ValueListenableBuilder(
         valueListenable: viewmodel.movieList,
         builder: (context, movielist, _) {
-          if(movielist == null) return const HomepageShimmer();
+          if (movielist == null) return const HomepageShimmer();
           return Scaffold(
             body: SafeArea(
               child: Container(

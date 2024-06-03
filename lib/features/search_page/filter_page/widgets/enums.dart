@@ -1,4 +1,4 @@
-enum SortedBy { asc, desc }
+enum OrderBy { asc, desc }
 
 enum SortBy { like_count, rating, download_count, year }
 
@@ -13,14 +13,14 @@ class GenreFilterModel {
 }
 
 enum Genre {
-  action,
-  animation,
-  horror,
-  crime,
-  history,
-  comedy,
-  SciFi,
-  fantasy,
-  adventure,
-  war;
+  Action,
+  Animation,
+  Horror,
+  War,
+  Crime,
+  History,
+  Comedy,
+  Drama,
+  Fantasy,
+  Adventure;
 }

@@ -23,7 +23,7 @@ class ListViewBuilder extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
             child: ListView.builder(
               scrollDirection: Axis.horizontal, // Ensure horizontal scrolling
-              itemCount: popularMovies.length,
+              itemCount: 15,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: (){

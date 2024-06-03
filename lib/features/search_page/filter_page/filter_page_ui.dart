@@ -4,7 +4,8 @@ import 'package:mymovieapp/features/search_page/filter_page/widgets/box_containe
 import 'package:mymovieapp/features/search_page/filter_page/widgets/enums.dart';
 
 class FilterPageUi extends StatelessWidget {
-  FilterPageUi({Key? key});
+  final VoidCallback onPressed;
+  FilterPageUi({Key? key, required this.onPressed});
 
   FilterPageViewmodel viewmodel = FilterPageViewmodel.getInstance();
 
@@ -143,11 +144,11 @@ class FilterPageUi extends StatelessWidget {
 
   Widget sortedByWidget() {
     return ValueListenableBuilder(
-      valueListenable: viewmodel.sortedBy,
+      valueListenable: viewmodel.orderBy,
       builder: (context, value, _) {
         return Wrap(
           spacing: 10,
-          children: SortedBy.values
+          children: OrderBy.values
               .map(
                 (e) => BoxContainerText(
                   text: e.name,
@@ -177,9 +178,7 @@ class FilterPageUi extends StatelessWidget {
           borderRadius: BorderRadius.circular(100),
         ),
         child: InkWell(
-          onTap: () {
-            print("Apply");
-          },
+          onTap: onPressed,
           child: const Center(
             child: Text(
               'Apply',

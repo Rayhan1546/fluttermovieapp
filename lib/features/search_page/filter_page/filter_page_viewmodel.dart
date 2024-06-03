@@ -9,10 +9,10 @@ class FilterPageViewmodel {
     return filterPageViewmodel!;
   }
 
-  ValueNotifier<SortedBy> sortedBy = ValueNotifier(SortedBy.desc);
+  ValueNotifier<OrderBy> orderBy = ValueNotifier(OrderBy.desc);
 
-  void onChangedSortedBy(SortedBy sortedBy) {
-    this.sortedBy.value = sortedBy;
+  void onChangedSortedBy(OrderBy orderBy) {
+    this.orderBy.value = orderBy;
   }
 
   ValueNotifier<SortBy> sortBy = ValueNotifier(SortBy.like_count);
@@ -42,7 +42,7 @@ class FilterPageViewmodel {
     return sortBy.value.name;
   }
 
-  String getSelectedSortedBy() {
-    return sortedBy.value.name;
+  String getSelectedOrderBy() {
+    return orderBy.value.name;
   }
 }

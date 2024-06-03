@@ -12,7 +12,6 @@ class PageTransitionUi extends StatelessWidget {
     return ValueListenableBuilder<int>(
       valueListenable: viewModel.navIndex,
       builder: (context, selectedIndex, _) {
-        print(selectedIndex);
         return Scaffold(
           body: viewModel.getPages(),
           bottomNavigationBar: BottomNavigationBarUi(

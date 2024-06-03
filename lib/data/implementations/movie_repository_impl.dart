@@ -7,9 +7,16 @@ import 'package:http/http.dart' as http;
 class MovieRepositoryImpl extends MovieRepository {
   @override
   Future<PopularMovieListModel> getMovieList() async {
-    const movieUrl =
-        'https://yts.mx/api/v2/list_movies.json?sort_by=topmovies&order_by=desc';
-    final response = await http.get(Uri.parse(movieUrl));
+    final Uri movieUrl = Uri.https(
+      'yts.mx',
+      '/api/v2/list_movies.json',
+      {
+        'sort_by': 'topmovies',
+        'order_by': 'desc',
+        'limit': '50',
+      },
+    );
+    final response = await http.get(movieUrl);
     if (response.statusCode == 200) {
       final popularMovieListModel =
           PopularMovieListModel.fromJson(jsonDecode(response.body));
@@ -20,10 +27,18 @@ class MovieRepositoryImpl extends MovieRepository {
   }
 
   @override
-  Future<PopularMovieListModel> getSearchMovieList(String text) async {
-    String movieUrl = 'https://yts.mx/api/v2/list_movies.json?query_term=';
-    movieUrl = movieUrl + text;
-    final response = await http.get(Uri.parse(movieUrl));
+  Future<PopularMovieListModel> getSearchMovieList(
+      String text, String sortBy, String orderBy) async {
+    final Uri movieUrl = Uri.https(
+      'yts.mx',
+      '/api/v2/list_movies.json',
+      {
+        'query_term': text,
+        'sort_by': sortBy,
+        'order_by': orderBy,
+      },
+    );
+    final response = await http.get(movieUrl);
     if (response.statusCode == 200) {
       final popularMovieListModel =
           PopularMovieListModel.fromJson(jsonDecode(response.body));
@@ -35,16 +50,19 @@ class MovieRepositoryImpl extends MovieRepository {
 
   @override
   Future<MovieDetailsModel> getMovieDetails(int? id) async {
-    String apiUrl = 'https://yts.mx/api/v2/movie_details.json?with_images=true&with_cast=true&movie_id=';
-    apiUrl = '$apiUrl$id';
+    final Uri apiUrl = Uri.https('yts.mx', '/api/v2/movie_details.json', {
+      'with_images': 'true',
+      'with_cast': 'true',
+      'movie_id': id.toString(),
+    });
 
-    final response = await http.get(Uri.parse(apiUrl));
+    final response = await http.get(apiUrl);
     if (response.statusCode == 200) {
       final movieDetailsModel =
           MovieDetailsModel.fromJson(jsonDecode(response.body));
       return movieDetailsModel;
     } else {
-      throw Exception('Failed to load popular movies');
+      throw Exception('Failed to load movie details');
     }
   }
 }

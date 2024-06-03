@@ -1,10 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:mymovieapp/features/search_page/search_page_ui.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
+import 'package:path_provider/path_provider.dart' as path_provider;
 
-void main() {
+import 'data/hive_database/movie.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();
+  Hive.init(appDocumentDirectory.path);
+
+  Hive.registerAdapter(MovieAdapter());
+
+  await Hive.openBox<Movie>('moviesBox');
   runApp(MyApp());
 }
 
