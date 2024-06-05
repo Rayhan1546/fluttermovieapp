@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/home_page/shimmer/homepage_shimmer.dart';
 import 'package:mymovieapp/features/home_page/widgets/listview_builder.dart';
@@ -10,13 +9,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class HomePageUi extends StatelessWidget {
   HomePageUi({super.key});
 
-  HomepageViewmodel viewmodel = HomePageViewmodelInstance.getInstance();
+  HomepageViewmodel viewmodel = HomepageViewmodel.getInstance();
 
   @override
   Widget build(BuildContext context) {
-    viewmodel.getAllMovies();
     return ValueListenableBuilder(
-        valueListenable: viewmodel.movieList,
+        valueListenable: viewmodel.movies,
         builder: (context, movielist, _) {
           if (movielist == null) return const HomepageShimmer();
           return Scaffold(

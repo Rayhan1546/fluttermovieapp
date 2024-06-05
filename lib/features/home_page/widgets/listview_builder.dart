@@ -1,19 +1,17 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 
 class ListViewBuilder extends StatelessWidget {
   ListViewBuilder({super.key});
 
-  HomepageViewmodel viewmodel = HomePageViewmodelInstance.getInstance();
+  HomepageViewmodel viewmodel = HomepageViewmodel.getInstance();
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: viewmodel.movieList,
+      valueListenable: viewmodel.movies,
       builder: (context, popularMovies, _) {
         if (popularMovies == null || popularMovies.isEmpty) {
           return const Center(child: CircularProgressIndicator());
@@ -26,11 +24,13 @@ class ListViewBuilder extends StatelessWidget {
               itemCount: 15,
               itemBuilder: (context, index) {
                 return GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MovieDetailsUi(id: popularMovies[index].id!,),
+                        builder: (context) => MovieDetailsUi(
+                          id: popularMovies[index].id!,
+                        ),
                       ),
                     );
                   },
@@ -38,16 +38,22 @@ class ListViewBuilder extends StatelessWidget {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 0.34,
+                        color: Colors.black,
                         margin: const EdgeInsets.fromLTRB(0.0, 0.0, 14.0, 0.0),
                         child: Column(
                           children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(15),
-                              child: Image.network(
-                                popularMovies[index].largeCoverImage!,
-                                fit: BoxFit.fitWidth,
-                              ),
-                            ),
+                            Container(
+                                height:
+                                    MediaQuery.of(context).size.height * .23,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                       popularMovies[index].largeCoverImage ?? "",
+                                    ),
+                                    fit: BoxFit.fitWidth,
+                                  ),
+                                )),
                             const SizedBox(
                               height: 5,
                             ),
@@ -67,7 +73,7 @@ class ListViewBuilder extends StatelessWidget {
                             Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                popularMovies[index].year!.toString(),
+                                popularMovies[index].year.toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(
@@ -112,7 +118,7 @@ class ListViewBuilder extends StatelessWidget {
                                     width: 1,
                                   ),
                                   Text(
-                                    popularMovies[index].rating!.toString(),
+                                    popularMovies[index].rating.toString(),
                                     style: const TextStyle(
                                       fontWeight: FontWeight.w500,
                                       color: Colors.white,

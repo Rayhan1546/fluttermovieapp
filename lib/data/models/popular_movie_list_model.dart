@@ -47,14 +47,14 @@ class Movies {
   String? largeCoverImage;
 
   Movies({
-    this.id,
-    this.title,
-    this.year,
-    this.rating,
-    this.runtime,
-    this.genres,
-    this.language,
-    this.largeCoverImage,
+    required this.id,
+    required this.title,
+    required this.year,
+    required this.rating,
+    required this.runtime,
+    required this.genres,
+    required this.language,
+    required this.largeCoverImage,
   });
 
   Movies.fromJson(Map<String, dynamic> json) {

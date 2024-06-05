@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
@@ -12,12 +11,12 @@ import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 class PageViewBuilder extends StatelessWidget {
   PageViewBuilder({super.key});
 
-  HomepageViewmodel viewModel = HomePageViewmodelInstance.getInstance();
+  HomepageViewmodel viewModel = HomepageViewmodel.getInstance();
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: viewModel.movieList,
+      valueListenable: viewModel.movies,
       builder: (context, movielist, _) {
         if (movielist == null) {
           return const Center(child: CircularProgressIndicator());
@@ -71,8 +70,9 @@ class PageViewBuilder extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
+          color: Colors.grey,
           image: DecorationImage(
-            image: NetworkImage(movie.largeCoverImage!),
+            image: NetworkImage(movie.largeCoverImage ?? ""),
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.5), // Adjust the opacity as needed
@@ -128,9 +128,9 @@ class PageViewBuilder extends StatelessWidget {
                                 height: 3,
                               ),
                               Text(
-                                movie.genres!.length > 3
+                                movie.genres != null ? movie.genres!.length > 3
                                     ? movie.genres!.sublist(0, 3).join(", ")
-                                    : movie.genres!.join(", "),
+                                    : movie.genres!.join(", ") : 'Hello',
                                 style: const TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,

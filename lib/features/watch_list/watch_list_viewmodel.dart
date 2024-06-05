@@ -3,8 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:mymovieapp/data/implementations/favourite_repository_impl.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/data/repository/favourite_repository.dart';
+import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 
 class WatchListViewmodel {
+  static WatchListViewmodel? watchListViewmodel;
+
+  static WatchListViewmodel getInstance() {
+    watchListViewmodel ??= WatchListViewmodel();
+    return watchListViewmodel!;
+  }
+
   FavouriteRepository favouriteRepository = FavouriteRepositoryImpl();
 
   ValueNotifier<List<WatchListMovieModel>> favouriteMovieList =

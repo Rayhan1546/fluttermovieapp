@@ -24,13 +24,14 @@ class MovieAdapter extends TypeAdapter<Movie> {
       fields[5] as String?,
       fields[6] as int?,
       fields[3] as int?,
+      fields[7] != null ? (fields[7] as List).cast<String>() : ['comedy'],
     );
   }
 
   @override
   void write(BinaryWriter writer, Movie obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.title)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class MovieAdapter extends TypeAdapter<Movie> {
       ..writeByte(5)
       ..write(obj.largecoverimage)
       ..writeByte(6)
-      ..write(obj.runtime);
+      ..write(obj.runtime)
+      ..writeByte(7)
+      ..write(obj.genres);
   }
 
   @override

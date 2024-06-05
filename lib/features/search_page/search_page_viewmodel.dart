@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
-import 'package:mymovieapp/common/Instance/watch_list_viewmodel_instance.dart';
 import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
@@ -19,29 +17,28 @@ class SearchPageViewmodel {
     return searchPageViewmodel!;
   }
 
-  HomepageViewmodel viewmodel = HomePageViewmodelInstance.getInstance();
+  HomepageViewmodel viewmodel = HomepageViewmodel.getInstance();
 
   FilterPageViewmodel filterPageViewmodel = FilterPageViewmodel.getInstance();
 
-  ValueNotifier<List<Movies>?> get searchListMovies => viewmodel.movieList;
+  ValueNotifier<List<Movies>?> get searchListMovies => viewmodel.movies;
 
-  final Debounce _debounce = Debounce(milliseconds: 200);
+  final Debounce _debounce = Debounce(milliseconds: 100);
+
   TextEditingController searchController = TextEditingController();
 
   MovieRepository movieRepository = MovieRepositoryImpl();
 
-  WatchListViewmodel watchListViewmodel =
-      WatchListViewmodelInstance.getInstance();
+  WatchListViewmodel watchListViewmodel = WatchListViewmodel.getInstance();
 
   List<Movies> filterMoviesByGenres(List<Movies> movieList) {
     List<String> desiredGenres = filterPageViewmodel.selectedGenreString;
 
     List<Movies> filteredMovies = movieList.where((movie) {
-      bool hasAllDesiredGenres =
-      desiredGenres.every((desiredGenre) => movie.genres!.contains(desiredGenre));
+      bool hasAllDesiredGenres = desiredGenres
+          .every((desiredGenre) => movie.genres!.contains(desiredGenre));
       return hasAllDesiredGenres;
     }).toList();
-
 
     return filteredMovies;
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/common/Instance/home_page_viewmodel_instance.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
@@ -11,12 +10,12 @@ class SeeAllUi extends StatelessWidget {
   SeeAllUi({super.key});
 
   SeeAllViewmodel viewmodel = SeeAllViewmodel();
-  HomepageViewmodel homepageViewmodel = HomePageViewmodelInstance.getInstance();
+  HomepageViewmodel homepageViewmodel = HomepageViewmodel.getInstance();
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder<List<Movies>?>(
-      valueListenable: homepageViewmodel.movieList,
+      valueListenable: homepageViewmodel.movies,
       builder: (context, movies, _) {
         return SafeArea(
           child: Scaffold(
@@ -70,15 +69,16 @@ class SeeAllUi extends StatelessWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.network(
-                                  movie!.largeCoverImage!,
-                                  width:
-                                      MediaQuery.of(context).size.height * .15,
-                                  height:
-                                      MediaQuery.of(context).size.width * .35,
-                                  fit: BoxFit.cover,
+                              Container(
+                                width: MediaQuery.of(context).size.height * .15,
+                                height: MediaQuery.of(context).size.width * .35,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  color: Colors.grey,
+                                  image: DecorationImage(
+                                    image: NetworkImage(movie!.largeCoverImage ?? ""),
+                                    fit: BoxFit.fill,
+                                  )
                                 ),
                               ),
                               const SizedBox(width: 10),
@@ -88,7 +88,7 @@ class SeeAllUi extends StatelessWidget {
                                   children: [
                                     Text(
                                       maxLines: 1,
-                                      movie.title!,
+                                      movie.title ?? "",
                                       style: const TextStyle(
                                           fontSize: 16,
                                           fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class SeeAllUi extends StatelessWidget {
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      'Genres: ${movie.genres!.join(", ")}',
+                                      movie.genres != null ?'Genres: ${movie.genres?.join(", ")}' : 'hello',
                                       style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.white,
@@ -132,16 +132,16 @@ class SeeAllUi extends StatelessWidget {
                                                 Movies movie = movies![index];
                                                 viewmodel.onClickAddFav(
                                                     WatchListMovieModel(
-                                                        name: movie.title!,
+                                                        name: movie.title ?? "",
                                                         image: movie
-                                                            .largeCoverImage!,
-                                                        releaseYear: movie.year!
+                                                            .largeCoverImage ?? "",
+                                                        releaseYear: movie.year
                                                             .toString(),
                                                         runtime: movie.runtime
                                                             .toString(),
                                                         rating: movie.rating
                                                             .toString(),
-                                                        genres: movie.genres!,
+                                                        genres: movie.genres ?? [],
                                                         id: movie.id!));
                                                 CustomSnackbar.show(context, "Added to Watchlist");
                                               },

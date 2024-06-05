@@ -42,7 +42,6 @@ class MovieDetailsUi extends StatelessWidget {
                               color: Colors.white,
                             ),
                             onTap: () {
-                              viewModel.onClickClean();
                               Navigator.pop(context);
                             },
                           ),
@@ -153,7 +152,7 @@ class MovieDetailsUi extends StatelessWidget {
                         child: Text(
                           textAlign: TextAlign.left,
                           maxLines: 3,
-                          movie.descriptionFull!,
+                          movie.descriptionFull,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 13,

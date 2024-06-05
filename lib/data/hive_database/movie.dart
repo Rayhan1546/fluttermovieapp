@@ -25,6 +25,10 @@ class Movie extends HiveObject {
   @HiveField(6)
   int? runtime;
 
+  @HiveField(7)
+  List<dynamic>? genres;
 
-  Movie(this.title, this.id, this.language, this.rating, this.largecoverimage, this.runtime, this.year);
+
+  Movie(this.title, this.id, this.language, this.rating, this.largecoverimage,
+      this.runtime, this.year, this.genres);
 }

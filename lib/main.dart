@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:mymovieapp/features/settings_page/settings_page_ui.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 import 'data/hive_database/movie.dart';
 
@@ -35,7 +37,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.green,
             ),
-            home: PageTransitionUi(),
+            home: SettingsPageUi(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale.fromSubtags(
