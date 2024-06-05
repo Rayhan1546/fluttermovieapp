@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:mymovieapp/features/settings_page/widgets/dialog_box_ui.dart';
+import 'package:mymovieapp/features/settings_page/widgets/enums.dart';
+import 'package:mymovieapp/main_viewmodel.dart';
 
 class SettingsPageUi extends StatelessWidget {
-  const SettingsPageUi({super.key});
+  SettingsPageUi({super.key});
+
+  MainViewmodel mainViewmodel = MainViewmodel.getInstance();
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +36,10 @@ class SettingsPageUi extends StatelessWidget {
                       color: Colors.white,
                       fontWeight: FontWeight.bold),
                 ),
-                generalSettingUi(),
+                SizedBox(
+                  height: 5,
+                ),
+                generalSettingUi(context),
               ],
             ),
           ),
@@ -40,43 +48,74 @@ class SettingsPageUi extends StatelessWidget {
     );
   }
 
-  Widget generalSettingUi() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ListTile(
-          title: Text('Name',
-              style: TextStyle(
-                  fontSize: 18,
+  Widget generalSettingUi(BuildContext context) {
+    return ValueListenableBuilder(
+        valueListenable: mainViewmodel.language,
+        builder: (context, language, _) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ListTile(
+                onTap: () {},
+                title: Text('Name',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800)),
+                subtitle: Text(
+                  'Rayhan Mahmud',
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300),
+                ),
+                trailing: Icon(
+                  Icons.navigate_next_outlined,
                   color: Colors.white,
-                  fontWeight: FontWeight.w800)),
-          subtitle: Text(
-            'Rayhan',
-            style: TextStyle(
-                fontSize: 15, color: Colors.white, fontWeight: FontWeight.w300),
-          ),
-          trailing: Icon(
-            Icons.navigate_next_outlined,
-            color: Colors.white,
-          ),
-        ),
-        ListTile(
-          title: Text('Language',
-              style: TextStyle(
-                  fontSize: 18,
+                ),
+              ),
+              ListTile(
+                title: Text('Language',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800)),
+                subtitle: Text(
+                  language.getLanguageName(),
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300),
+                ),
+                trailing: Icon(
+                  Icons.navigate_next_outlined,
                   color: Colors.white,
-                  fontWeight: FontWeight.w800)),
-          subtitle: Text(
-            'English',
-            style: TextStyle(
-                fontSize: 15, color: Colors.white, fontWeight: FontWeight.w300),
-          ),
-          trailing: Icon(
-            Icons.navigate_next_outlined,
-            color: Colors.white,
-          ),
-        ),
-      ],
-    );
+                ),
+                onTap: () {
+                  DialogBoxUi(context);
+                },
+              ),
+              ListTile(
+                title: Text('Theme',
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w800)),
+                subtitle: Text(
+                  'Dark',
+                  style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300),
+                ),
+                trailing: Icon(
+                  Icons.navigate_next_outlined,
+                  color: Colors.white,
+                ),
+                onTap: () {},
+              ),
+            ],
+          );
+        });
   }
 }

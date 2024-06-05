@@ -5,6 +5,7 @@ import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
 import 'package:mymovieapp/features/search_page/filter_page/filter_page_ui.dart';
 import 'package:mymovieapp/features/search_page/search_page_viewmodel.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SearchPageUi extends StatelessWidget {
   SearchPageUi({super.key});
@@ -28,8 +29,8 @@ class SearchPageUi extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      const Text(
-                        "Search.",
+                      Text(
+                        AppLocalizations.of(context)!.search,
                         style: TextStyle(
                             fontSize: 25,
                             color: Colors.white,

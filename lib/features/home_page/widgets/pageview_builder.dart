@@ -7,6 +7,7 @@ import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/home_page/widgets/box_shape_text.dart';
 import 'package:mymovieapp/features/home_page/widgets/page_indicator.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class PageViewBuilder extends StatelessWidget {
   PageViewBuilder({super.key});
@@ -151,7 +152,7 @@ class PageViewBuilder extends StatelessWidget {
                                   const SizedBox(
                                     width: 8,
                                   ),
-                                  BoxShapeText(text: movie.language!)
+                                  BoxShapeText(text: movie.language ?? "")
                                 ],
                               )
                             ],
@@ -183,8 +184,8 @@ class PageViewBuilder extends StatelessWidget {
                                   CustomSnackbar.show(
                                       context, "Added to Watchlist");
                                 },
-                                child: const Text(
-                                  "Add to Watchlist",
+                                child: Text(
+                                  AppLocalizations.of(context)!.add_to_favorite,
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 12,

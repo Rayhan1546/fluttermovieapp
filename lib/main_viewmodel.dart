@@ -1,26 +1,30 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'data/local/language_data_source.dart';
+import 'features/settings_page/widgets/enums.dart';
 
 class MainViewmodel {
   static MainViewmodel? mainViewmodel;
 
-  static getInstance() {
+  static MainViewmodel getInstance() {
     mainViewmodel ??= MainViewmodel();
-    return mainViewmodel;
+    return mainViewmodel!;
   }
 
-  ValueNotifier<Language> language = ValueNotifier(Language.english);
-}
+  MainViewmodel() {
+    _loadLanguage();
+  }
 
-enum Language {
-  english,
-  bangla;
+  ValueNotifier<Language> language = ValueNotifier(Language.English);
 
-  String getLocal() {
-    switch (this) {
-      case Language.english:
-        return 'en';
-      case Language.bangla:
-        return 'bn';
+  void _loadLanguage() async {
+    Language? savedLanguage = await LanguagePreferences.getLanguage();
+    if (savedLanguage != null) {
+      language.value = savedLanguage;
     }
+  }
+
+  void onClickSetLanguage(Language language) {
+    this.language.value = language;
+    LanguagePreferences.setLanguage(language);
   }
 }

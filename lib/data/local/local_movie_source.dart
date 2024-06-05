@@ -38,7 +38,7 @@ class LocalMovieSource {
               e.largeCoverImage,
               e.runtime,
               e.year,
-              e.genres,
+              (e.genres ?? []).cast<String>(),
             ),
           )
           .toList());

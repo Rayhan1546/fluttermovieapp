@@ -24,7 +24,7 @@ class MovieAdapter extends TypeAdapter<Movie> {
       fields[5] as String?,
       fields[6] as int?,
       fields[3] as int?,
-      fields[7] != null ? (fields[7] as List).cast<String>() : ['comedy'],
+      (fields[7] as List?)?.cast<String>(),
     );
   }
 

@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
-import 'package:mymovieapp/features/settings_page/settings_page_ui.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-
 import 'data/hive_database/movie.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final appDocumentDirectory = await path_provider.getApplicationDocumentsDirectory();
+  final appDocumentDirectory =
+      await path_provider.getApplicationDocumentsDirectory();
   Hive.init(appDocumentDirectory.path);
 
   Hive.registerAdapter(MovieAdapter());
@@ -34,10 +32,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'Flutter Demo',
-            theme: ThemeData(
-              primarySwatch: Colors.green,
-            ),
-            home: SettingsPageUi(),
+            home: PageTransitionUi(),
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             supportedLocales: AppLocalizations.supportedLocales,
             locale: Locale.fromSubtags(

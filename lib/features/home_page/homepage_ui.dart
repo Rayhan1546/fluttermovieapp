@@ -40,8 +40,8 @@ class HomePageUi extends StatelessWidget {
                                   fontSize: 15,
                                 ),
                               ),
-                              const Text(
-                                'Rayhan Mahmud.',
+                              Text(
+                                AppLocalizations.of(context)!.name,
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
@@ -66,8 +66,8 @@ class HomePageUi extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          const Text(
-                            "Top Movie Picks",
+                          Text(
+                            AppLocalizations.of(context)!.top_movie,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,
@@ -75,8 +75,8 @@ class HomePageUi extends StatelessWidget {
                           ),
                           const Spacer(),
                           GestureDetector(
-                            child: const Text(
-                              "See All",
+                            child: Text(
+                              AppLocalizations.of(context)!.see_all,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
@@ -97,8 +97,8 @@ class HomePageUi extends StatelessWidget {
                       ListViewBuilder(),
                       Row(
                         children: [
-                          const Text(
-                            "Upcoming Movies",
+                          Text(
+                            AppLocalizations.of(context)!.upcoming_movie,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 15,

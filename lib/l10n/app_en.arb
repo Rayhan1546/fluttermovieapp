@@ -1,6 +1,7 @@
 {
     "welcome": "Welcome Back",
-    "movie_hub":"Movie HUB",
+    "name": "Rayhan Mahmud",
+    "movie_hub": "Movie HUB",
     "search": "Search",
     "favourite_movie": "favourite_movie",
     "top_movie": "Top Movie",
