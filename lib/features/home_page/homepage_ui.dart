@@ -18,9 +18,9 @@ class HomePageUi extends StatelessWidget {
         builder: (context, movielist, _) {
           if (movielist == null) return const HomepageShimmer();
           return Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.surface,
             body: SafeArea(
               child: Container(
-                color: Colors.black,
                 padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10, 0.0),
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
@@ -35,25 +35,22 @@ class HomePageUi extends StatelessWidget {
                             children: [
                               Text(
                                 AppLocalizations.of(context)!.welcome,
-                                style: const TextStyle(
-                                  color: Colors.white,
+                                style: TextStyle(
                                   fontSize: 15,
                                 ),
                               ),
                               Text(
                                 AppLocalizations.of(context)!.name,
                                 style: TextStyle(
-                                    color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
                             ],
                           ),
                           Spacer(),
-                          const Icon(
+                          Icon(
                             Icons.check_box_outline_blank_rounded,
                             size: 40,
-                            color: Colors.white,
                           ),
                         ],
                       ),
@@ -69,7 +66,6 @@ class HomePageUi extends StatelessWidget {
                           Text(
                             AppLocalizations.of(context)!.top_movie,
                             style: TextStyle(
-                                color: Colors.white,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -77,8 +73,8 @@ class HomePageUi extends StatelessWidget {
                           GestureDetector(
                             child: Text(
                               AppLocalizations.of(context)!.see_all,
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
+                              style: TextStyle(
+                                  fontSize: 12),
                             ),
                             onTap: () {
                               Navigator.push(
@@ -100,16 +96,15 @@ class HomePageUi extends StatelessWidget {
                           Text(
                             AppLocalizations.of(context)!.upcoming_movie,
                             style: TextStyle(
-                                color: Colors.white,
                                 fontSize: 15,
                                 fontWeight: FontWeight.bold),
                           ),
                           const Spacer(),
                           GestureDetector(
-                            child: const Text(
-                              "See All",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12),
+                            child: Text(
+                              AppLocalizations.of(context)!.see_all,
+                              style: TextStyle(
+                                  fontSize: 12),
                             ),
                             onTap: () {
                               Navigator.push(

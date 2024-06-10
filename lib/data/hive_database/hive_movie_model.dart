@@ -1,9 +1,9 @@
 import 'package:hive/hive.dart';
 
-part 'movie.g.dart';
+part 'hive_movie_model.g.dart';
 
 @HiveType(typeId: 0)
-class Movie extends HiveObject {
+class HiveMovieModel extends HiveObject {
   @HiveField(0)
   String? title;
 
@@ -29,6 +29,6 @@ class Movie extends HiveObject {
   List<String>? genres;
 
 
-  Movie(this.title, this.id, this.language, this.rating, this.largecoverimage,
+  HiveMovieModel(this.title, this.id, this.language, this.rating, this.largecoverimage,
       this.runtime, this.year, this.genres);
 }

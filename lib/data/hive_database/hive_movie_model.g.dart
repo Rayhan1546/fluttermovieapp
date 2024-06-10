@@ -1,22 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movie.dart';
+part of 'hive_movie_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class MovieAdapter extends TypeAdapter<Movie> {
+class MovieAdapter extends TypeAdapter<HiveMovieModel> {
   @override
   final int typeId = 0;
 
   @override
-  Movie read(BinaryReader reader) {
+  HiveMovieModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Movie(
+    return HiveMovieModel(
       fields[0] as String?,
       fields[1] as int?,
       fields[2] as String?,
@@ -29,7 +29,7 @@ class MovieAdapter extends TypeAdapter<Movie> {
   }
 
   @override
-  void write(BinaryWriter writer, Movie obj) {
+  void write(BinaryWriter writer, HiveMovieModel obj) {
     writer
       ..writeByte(8)
       ..writeByte(0)

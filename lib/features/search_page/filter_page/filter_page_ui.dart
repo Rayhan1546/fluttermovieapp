@@ -35,10 +35,8 @@ class FilterPageUi extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                   ),
                 ),
-                const Divider(
-                  color: Colors.white60,
-                  height: 20,
-                  thickness: 2,
+                const SizedBox(
+                  height: 10,
                 ),
                 const Text(
                   'Sort By',
@@ -47,6 +45,11 @@ class FilterPageUi extends StatelessWidget {
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                   ),
+                ),
+                const Divider(
+                  color: Colors.white60,
+                  height: 20,
+                  thickness: 2,
                 ),
                 const SizedBox(height: 8),
                 sortByWidget(),

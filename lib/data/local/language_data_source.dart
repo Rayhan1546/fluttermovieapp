@@ -1,7 +1,7 @@
 import 'package:mymovieapp/features/settings_page/widgets/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class LanguagePreferences {
+class LanguageDataSource {
   static const String _key = 'language';
 
   static Future<Language?> getLanguage() async {

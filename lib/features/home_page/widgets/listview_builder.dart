@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/features/home_page/homepage_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_ui.dart';
@@ -38,22 +39,25 @@ class ListViewBuilder extends StatelessWidget {
                     children: [
                       Container(
                         width: MediaQuery.of(context).size.width * 0.34,
-                        color: Colors.black,
                         margin: const EdgeInsets.fromLTRB(0.0, 0.0, 14.0, 0.0),
                         child: Column(
                           children: [
                             Container(
-                                height:
-                                    MediaQuery.of(context).size.height * .23,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                       popularMovies[index].largeCoverImage ?? "",
-                                    ),
-                                    fit: BoxFit.fitWidth,
+                              height: MediaQuery.of(context).size.height * .23,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: CachedNetworkImageProvider(
+                                    popularMovies[index].largeCoverImage ?? "",
                                   ),
-                                )),
+                                  fit: BoxFit.fitWidth,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.3),
+                                    BlendMode.darken,
+                                  ),
+                                ),
+                              ),
+                            ),
                             const SizedBox(
                               height: 5,
                             ),
@@ -63,10 +67,9 @@ class ListViewBuilder extends StatelessWidget {
                                 popularMovies[index].title!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                  color: Colors.white,
                                 ),
                               ),
                             ),
@@ -76,10 +79,9 @@ class ListViewBuilder extends StatelessWidget {
                                 popularMovies[index].year.toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w400,
-                                  color: Colors.white,
                                 ),
                               ),
                             )
@@ -111,8 +113,8 @@ class ListViewBuilder extends StatelessWidget {
                                 children: [
                                   const Icon(
                                     Icons.star_rate_rounded,
-                                    color: Colors.white,
                                     size: 16,
+                                    color: Colors.white,
                                   ),
                                   const SizedBox(
                                     width: 1,
@@ -120,10 +122,9 @@ class ListViewBuilder extends StatelessWidget {
                                   Text(
                                     popularMovies[index].rating.toString(),
                                     style: const TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                      fontSize: 10,
-                                    ),
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 10,
+                                        color: Colors.white),
                                   ),
                                 ],
                               ),

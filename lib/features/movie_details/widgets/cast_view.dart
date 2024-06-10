@@ -2,19 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_viewmodel.dart';
 
 class CastView extends StatelessWidget {
+
   CastView({super.key});
 
   MovieDetailsViewModel viewModel = MovieDetailsViewModel.getInstance();
 
-  get index => null;
-
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: MovieDetailsViewModel.movieDetails,
+      valueListenable: viewModel.movieDetails,
       builder: (context, movie, _) {
         return SizedBox(
-          height: MediaQuery.of(context).size.height /5,
+          height: MediaQuery.of(context).size.height / 5,
           width: MediaQuery.of(context).size.width,
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -24,13 +23,13 @@ class CastView extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width/4,
+                    width: MediaQuery.of(context).size.width / 4,
                     child: Column(
-                     crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           height: MediaQuery.of(context).size.height / 8,
-                         width: MediaQuery.of(context).size.width / 4,
+                          width: MediaQuery.of(context).size.width / 4,
                           decoration: BoxDecoration(
                             color: Colors.white60,
                             borderRadius: BorderRadius.circular(8),
@@ -42,9 +41,21 @@ class CastView extends StatelessWidget {
                             ),
                           ),
                         ),
-                        const SizedBox(height: 5,),
-                        Text(castMember?.name ?? "Name", overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white,fontSize: 13),),
-                        Text(castMember?.name ?? "Name", overflow: TextOverflow.ellipsis, style: const TextStyle(color: Colors.white,fontSize: 11),),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          castMember?.name ?? "Name",
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 13),
+                        ),
+                        Text(
+                          castMember?.name ?? "Name",
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 11),
+                        ),
                       ],
                     ),
                   ),

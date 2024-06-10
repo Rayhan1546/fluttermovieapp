@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/features/settings_page/widgets/dialog_box_ui.dart';
-import 'package:mymovieapp/features/settings_page/widgets/enums.dart';
+import 'package:mymovieapp/features/settings_page/widgets/language_dialog_box_ui.dart';
+import 'package:mymovieapp/features/settings_page/widgets/theme_dialog_box_ui.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
 
 class SettingsPageUi extends StatelessWidget {
@@ -11,7 +11,7 @@ class SettingsPageUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
@@ -21,20 +21,14 @@ class SettingsPageUi extends StatelessWidget {
               children: [
                 Text(
                   'Settings',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 20,
                 ),
                 Text(
                   'General',
-                  style: TextStyle(
-                      fontSize: 25,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
                   height: 5,
@@ -58,62 +52,51 @@ class SettingsPageUi extends StatelessWidget {
               ListTile(
                 onTap: () {},
                 title: Text('Name',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                 subtitle: Text(
                   'Rayhan Mahmud',
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
                 trailing: Icon(
                   Icons.navigate_next_outlined,
-                  color: Colors.white,
                 ),
               ),
               ListTile(
                 title: Text('Language',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800)),
+                    style:
+                        TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
                 subtitle: Text(
                   language.getLanguageName(),
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300),
+                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
                 ),
                 trailing: Icon(
                   Icons.navigate_next_outlined,
-                  color: Colors.white,
                 ),
                 onTap: () {
-                  DialogBoxUi(context);
+                  LanguageDialoagBoxUi(context);
                 },
               ),
-              ListTile(
-                title: Text('Theme',
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800)),
-                subtitle: Text(
-                  'Dark',
-                  style: TextStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w300),
-                ),
-                trailing: Icon(
-                  Icons.navigate_next_outlined,
-                  color: Colors.white,
-                ),
-                onTap: () {},
-              ),
+              ValueListenableBuilder(
+                  valueListenable: mainViewmodel.theme,
+                  builder: (context, theme, _) {
+                    return ListTile(
+                      title: Text('Theme',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.w800)),
+                      subtitle: Text(
+                        theme.getThemeName(),
+                        style: TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.w300),
+                      ),
+                      trailing: Icon(
+                        Icons.navigate_next_outlined,
+                      ),
+                      onTap: () {
+                        ThemeDialoagBoxUi(context);
+                      },
+                    );
+                  }),
             ],
           );
         });

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
@@ -30,7 +31,7 @@ class PageViewBuilder extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 3.7,
                 child: PageView.builder(
-                  onPageChanged: (int page){
+                  onPageChanged: (int page) {
                     viewModel.pageIndexChage(page);
                   },
                   itemCount: itemSize,
@@ -56,7 +57,6 @@ class PageViewBuilder extends StatelessWidget {
 
   Widget _buildMovieItem(Movies movie, int pagePosition, double height,
       double width, int itemSize, context) {
-
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -73,7 +73,7 @@ class PageViewBuilder extends StatelessWidget {
           borderRadius: BorderRadius.circular(15),
           color: Colors.grey,
           image: DecorationImage(
-            image: NetworkImage(movie.largeCoverImage ?? ""),
+            image: CachedNetworkImageProvider(movie.largeCoverImage ?? ""),
             fit: BoxFit.fill,
             colorFilter: ColorFilter.mode(
               Colors.black.withOpacity(0.5), // Adjust the opacity as needed
@@ -129,9 +129,11 @@ class PageViewBuilder extends StatelessWidget {
                                 height: 3,
                               ),
                               Text(
-                                movie.genres != null ? movie.genres!.length > 3
-                                    ? movie.genres!.sublist(0, 3).join(", ")
-                                    : movie.genres!.join(", ") : 'Hello',
+                                movie.genres != null
+                                    ? movie.genres!.length > 3
+                                        ? movie.genres!.sublist(0, 3).join(", ")
+                                        : movie.genres!.join(", ")
+                                    : 'Hello',
                                 style: const TextStyle(
                                   fontSize: 10,
                                   color: Colors.white,
@@ -147,8 +149,7 @@ class PageViewBuilder extends StatelessWidget {
                                   const SizedBox(
                                     width: 8,
                                   ),
-                                  BoxShapeText(
-                                      text: '${movie.runtime}m'),
+                                  BoxShapeText(text: '${movie.runtime}m'),
                                   const SizedBox(
                                     width: 8,
                                   ),
@@ -163,7 +164,8 @@ class PageViewBuilder extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
-                              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 45),
+                              margin: EdgeInsets.only(
+                                  top: MediaQuery.of(context).size.height / 45),
                               height: height * .038,
                               width: width * .35,
                               decoration: BoxDecoration(

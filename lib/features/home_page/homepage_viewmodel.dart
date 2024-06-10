@@ -1,36 +1,48 @@
-import 'dart:async';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:mymovieapp/data/local/local_movie_source.dart';
+import 'package:mymovieapp/data/hive_database/hive_data_source.dart';
+import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/data/models/popular_movie_list_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
+import 'package:mymovieapp/data/remote/api_client.dart';
+import 'package:mymovieapp/data/repository/movie_repository.dart';
 import 'package:mymovieapp/features/watch_list/watch_list_viewmodel.dart';
 
 class HomepageViewmodel {
   static HomepageViewmodel? homepageViewmodel;
 
   static HomepageViewmodel getInstance() {
-    homepageViewmodel ??= HomepageViewmodel();
+    homepageViewmodel ??= HomepageViewmodel(
+        movieRepository: MovieRepositoryImpl(
+      apiClient: ApiClient(),
+      hiveDataSource: HiveDataSource(),
+    ));
     return homepageViewmodel!;
   }
+
+  MovieRepository movieRepository;
+
+  late final Stream<List<Movies>> _movieDataStream;
 
   static ValueNotifier<int> pageIndex = ValueNotifier(0);
 
   ValueNotifier<List<Movies>?> _movies = ValueNotifier(null);
   ValueNotifier<List<Movies>?> get movies => _movies;
 
-  LocalMovieSource localMovieSource = LocalMovieSource.getInstance();
+  WatchListViewmodel watchListViewmodel = WatchListViewmodel.getInstance();
 
-  HomepageViewmodel() {
-    localMovieSource.fetchData();
-    localMovieSource.movieStream.listen((movies) {
-      _movies.value = movies;
-    });
+  HomepageViewmodel({required this.movieRepository}) {
+    _movieDataStream = movieRepository.getMovieList();
+    fetchMovieData();
   }
 
-  WatchListViewmodel watchListViewmodel = WatchListViewmodel.getInstance();
+  void fetchMovieData() {
+    _movies.value = [];
+    if (kDebugMode) {
+      _movieDataStream.listen((movieList) {
+        _movies.value = movieList;
+      });
+    }
+  }
 
   void onClickAddToWatchLit(WatchListMovieModel movie) {
     watchListViewmodel.onClickAddToFavourite(movie);

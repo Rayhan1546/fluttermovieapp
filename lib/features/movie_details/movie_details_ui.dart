@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
+import 'package:mymovieapp/data/hive_database/hive_data_source.dart';
+import 'package:mymovieapp/data/implementations/movie_repository_impl.dart';
 import 'package:mymovieapp/data/models/movie_details_model.dart';
 import 'package:mymovieapp/data/models/watch_list_movie_model.dart';
+import 'package:mymovieapp/data/remote/api_client.dart';
 import 'package:mymovieapp/features/movie_details/movie_details_viewmodel.dart';
 import 'package:mymovieapp/features/movie_details/shimmer/movie_details_shimmer.dart';
 import 'package:mymovieapp/features/movie_details/widgets/box_shape_text.dart';
@@ -13,13 +16,18 @@ class MovieDetailsUi extends StatelessWidget {
   final int id;
   MovieDetailsUi({super.key, required this.id});
 
-  MovieDetailsViewModel viewModel = MovieDetailsViewModel();
+  MovieDetailsViewModel viewModel = MovieDetailsViewModel.getInstance();
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final isDarkMoodOn = theme.brightness == Brightness.dark ? true : false;
+
+    viewModel.init();
+
     viewModel.getMovieDetails(id);
     return ValueListenableBuilder<Movie?>(
-        valueListenable: MovieDetailsViewModel.movieDetails,
+        valueListenable: viewModel.movieDetails,
         builder: (context, movie, _) {
           if (movie == null) {
             return const MovieDetailsShimmer();
@@ -28,7 +36,7 @@ class MovieDetailsUi extends StatelessWidget {
               child: Scaffold(
                   body: Container(
                 padding: const EdgeInsets.fromLTRB(10, 10, 10, 20),
-                color: Colors.black,
+                color: isDarkMoodOn ? Colors.black : Colors.white,
                 height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 child: SingleChildScrollView(
@@ -37,9 +45,9 @@ class MovieDetailsUi extends StatelessWidget {
                       Row(
                         children: [
                           GestureDetector(
-                            child: const Icon(
+                            child: Icon(
                               Icons.arrow_back,
-                              color: Colors.white,
+                              color: isDarkMoodOn ? Colors.white : Colors.black,
                             ),
                             onTap: () {
                               Navigator.pop(context);
@@ -48,10 +56,11 @@ class MovieDetailsUi extends StatelessWidget {
                           const SizedBox(
                             width: 10,
                           ),
-                          const Text(
+                          Text(
                             "Movie Details",
                             style: TextStyle(
-                                color: Colors.white,
+                                color:
+                                    isDarkMoodOn ? Colors.white : Colors.black,
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -68,7 +77,8 @@ class MovieDetailsUi extends StatelessWidget {
                             image: NetworkImage(movie.largeCoverImage ?? ""),
                             fit: BoxFit.fill,
                           ),
-                          borderRadius: const BorderRadius.all(Radius.circular(12.0)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(12.0)),
                         ),
                       ),
                       const SizedBox(
@@ -85,14 +95,18 @@ class MovieDetailsUi extends StatelessWidget {
                               String genre = movie.genres[genreIndex];
                               return isLastItem
                                   ? Text(genre,
-                                      style: const TextStyle(
-                                          color: Colors.white,
+                                      style: TextStyle(
+                                          color: isDarkMoodOn
+                                              ? Colors.white
+                                              : Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600))
                                   : Text(
                                       "$genre ~ ",
-                                      style: const TextStyle(
-                                          color: Colors.white,
+                                      style: TextStyle(
+                                          color: isDarkMoodOn
+                                              ? Colors.white
+                                              : Colors.black,
                                           fontSize: 12,
                                           fontWeight: FontWeight.w600),
                                     );
@@ -109,19 +123,24 @@ class MovieDetailsUi extends StatelessWidget {
                               maxLines: 2,
                               movie.title ?? "",
                               overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color:
+                                    isDarkMoodOn ? Colors.white : Colors.black,
                               ),
                             ),
                           ),
                           GestureDetector(
-                            onTap: (){
-                              viewModel.onClickTorrentLaunch(movie.torrents[0].url);
+                            onTap: () {
+                              viewModel
+                                  .onClickTorrentLaunch(movie.torrents[0].url);
                             },
-                            child: const Icon(Icons.download_outlined,
-                                size: 30, color: Colors.white),
+                            child: Icon(
+                              Icons.download_outlined,
+                              size: 30,
+                              color: isDarkMoodOn ? Colors.white : Colors.black,
+                            ),
                           )
                         ],
                       ),
@@ -130,15 +149,24 @@ class MovieDetailsUi extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          BoxShapeText(text: movie.year!.toString()),
+                          BoxShapeText(
+                            text: movie.year!.toString(),
+                            color: isDarkMoodOn ? Colors.white : Colors.black,
+                          ),
                           const Spacer(
                             flex: 1,
                           ),
-                          BoxShapeText(text: movie.rating!.toString()),
+                          BoxShapeText(
+                            text: movie.rating!.toString(),
+                            color: isDarkMoodOn ? Colors.white : Colors.black,
+                          ),
                           const Spacer(
                             flex: 1,
                           ),
-                          BoxShapeText(text: movie.imdbCode.toString()),
+                          BoxShapeText(
+                            text: movie.imdbCode.toString(),
+                            color: isDarkMoodOn ? Colors.white : Colors.black,
+                          ),
                           const Spacer(
                             flex: 16,
                           )
@@ -154,10 +182,10 @@ class MovieDetailsUi extends StatelessWidget {
                           maxLines: 3,
                           movie.descriptionFull,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,
-                            color: Colors.white,
+                            color: isDarkMoodOn ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -168,21 +196,23 @@ class MovieDetailsUi extends StatelessWidget {
                           width: MediaQuery.of(context).size.width,
                           height: MediaQuery.of(context).size.height / 16,
                           child: ElevatedBtn(
-                              buttonText: "Add To Watchlist",
-                              backgroundColor: Colors.indigoAccent.shade400,
-                              onPressed: () {
-                                viewModel.onClickAddFav(WatchListMovieModel(
-                                    name: movie.title!,
-                                    image: movie.largeCoverImage!,
-                                    releaseYear: movie.year!.toString(),
-                                    runtime: movie.runtime!.toString(),
-                                    rating: movie.rating!.toString(),
-                                    genres: movie.genres,
-                                    id: movie.id!));
-                                CustomSnackbar.show(
-                                    context, "Added to Watchlist");
-                              },
-                              textcolor: Colors.white)),
+                            buttonText: "Add To Watchlist",
+                            backgroundColor: Colors.indigoAccent.shade400,
+                            onPressed: () {
+                              viewModel.onClickAddFav(WatchListMovieModel(
+                                  name: movie.title!,
+                                  image: movie.largeCoverImage!,
+                                  releaseYear: movie.year!.toString(),
+                                  runtime: movie.runtime!.toString(),
+                                  rating: movie.rating!.toString(),
+                                  genres: movie.genres,
+                                  id: movie.id!));
+                              CustomSnackbar.show(
+                                  context, "Added to Watchlist");
+                            },
+                            textcolor:
+                                isDarkMoodOn ? Colors.white : Colors.black,
+                          )),
                       const SizedBox(
                         height: 12,
                       ),
@@ -193,10 +223,12 @@ class MovieDetailsUi extends StatelessWidget {
                           ),
                           Column(
                             children: [
-                              const Text(
+                              Text(
                                 "Overall Rating",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: isDarkMoodOn
+                                        ? Colors.white
+                                        : Colors.black,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -205,8 +237,10 @@ class MovieDetailsUi extends StatelessWidget {
                               ),
                               Text(
                                 movie.rating.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
+                                style: TextStyle(
+                                    color: isDarkMoodOn
+                                        ? Colors.white
+                                        : Colors.black,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -222,17 +256,19 @@ class MovieDetailsUi extends StatelessWidget {
                           Container(
                             width: 2,
                             height: MediaQuery.of(context).size.height / 9,
-                            color: Colors.white,
+                            color: isDarkMoodOn ? Colors.white : Colors.black,
                           ),
                           const Spacer(
                             flex: 1,
                           ),
-                          const Column(
+                          Column(
                             children: [
                               Text(
                                 "Your Rating",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: isDarkMoodOn
+                                        ? Colors.white
+                                        : Colors.black,
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -242,7 +278,9 @@ class MovieDetailsUi extends StatelessWidget {
                               Text(
                                 "0",
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: isDarkMoodOn
+                                        ? Colors.white
+                                        : Colors.black,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -260,26 +298,29 @@ class MovieDetailsUi extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      const Row(
+                      Row(
                         children: [
                           Text(
                             "Cast ~",
                             style: TextStyle(
-                                color: Colors.white,
+                                color:
+                                    isDarkMoodOn ? Colors.white : Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500),
                           ),
                           Text(
                             " Writter ~",
                             style: TextStyle(
-                                color: Colors.white,
+                                color:
+                                    isDarkMoodOn ? Colors.white : Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500),
                           ),
                           Text(
                             " Directer",
                             style: TextStyle(
-                                color: Colors.white,
+                                color:
+                                    isDarkMoodOn ? Colors.white : Colors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -287,7 +328,8 @@ class MovieDetailsUi extends StatelessWidget {
                           Text(
                             "See All",
                             style: TextStyle(
-                                color: Colors.white,
+                                color:
+                                    isDarkMoodOn ? Colors.white : Colors.black,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w500),
                           ),

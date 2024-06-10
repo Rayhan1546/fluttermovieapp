@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:mymovieapp/features/settings_page/widgets/enums.dart';
+import 'package:mymovieapp/common/enums/themes.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
 
-void DialogBoxUi(BuildContext context) {
+void ThemeDialoagBoxUi(BuildContext context) {
   MainViewmodel mainViewmodel = MainViewmodel.getInstance();
 
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return ValueListenableBuilder(
-          valueListenable: mainViewmodel.language,
+          valueListenable: mainViewmodel.theme,
           builder: (context, value, _) {
             return AlertDialog(
               backgroundColor: Colors.grey[900],
               title: Text(
-                'Select Language',
+                'Select Theme',
                 style:
                     TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
-                children: Language.values
-                    .map((e) => _languageButton(
+                children: Themes.values
+                    .map((e) => _themeButton(
                           context,
                           e,
                           value == e,
                           () {
-                            mainViewmodel.onClickSetLanguage(e);
+                            mainViewmodel.onClickSetTheme(e);
                             Navigator.pop(context);
                           },
                         ))
@@ -38,10 +38,10 @@ void DialogBoxUi(BuildContext context) {
   );
 }
 
-Widget _languageButton(BuildContext context, Language language, bool isSelceted,
-    VoidCallback onTap) {
+Widget _themeButton(
+    BuildContext context, Themes theme, bool isSelceted, VoidCallback onTap) {
   return ListTile(
-    title: Text(language.name, style: TextStyle(color: Colors.white)),
+    title: Text(theme.name, style: TextStyle(color: Colors.white)),
     trailing: isSelceted ? Icon(Icons.check, color: Colors.white) : null,
     onTap: onTap,
   );

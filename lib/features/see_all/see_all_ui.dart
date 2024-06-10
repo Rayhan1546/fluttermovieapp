@@ -17,21 +17,20 @@ class SeeAllUi extends StatelessWidget {
     return ValueListenableBuilder<List<Movies>?>(
       valueListenable: homepageViewmodel.movies,
       builder: (context, movies, _) {
-        return SafeArea(
-          child: Scaffold(
-            body: Container(
+        return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.surface,
+          body: SafeArea(
+            child: Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              color: Colors.black,
-              padding: const EdgeInsets.fromLTRB(10, 5, 10, 20),
+              padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
               child: Column(
                 children: [
                   Row(
                     children: [
                       GestureDetector(
-                        child: const Icon(
+                        child: Icon(
                           Icons.arrow_back,
-                          color: Colors.white,
                         ),
                         onTap: () {
                           Navigator.pop(context);
@@ -40,17 +39,12 @@ class SeeAllUi extends StatelessWidget {
                       const SizedBox(
                         width: 10,
                       ),
-                      const Text(
+                      Text(
                         "Movie List",
                         style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w500),
+                            fontSize: 25, fontWeight: FontWeight.w600),
                       ),
                     ],
-                  ),
-                  const SizedBox(
-                    height: 10,
                   ),
                   Expanded(
                     child: ListView.builder(
@@ -59,10 +53,11 @@ class SeeAllUi extends StatelessWidget {
                       itemBuilder: (context, index) {
                         final movie = movies?[index];
                         return Container(
-                          height: MediaQuery.of(context).size.height / 6,
+                          height: MediaQuery.of(context).size.height / 5.5,
                           margin: const EdgeInsets.only(top: 10),
-                          padding: const EdgeInsets.all(4),
+                          padding: EdgeInsets.only(right: 10),
                           decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black, width: 2),
                             color: Colors.white10,
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -70,51 +65,49 @@ class SeeAllUi extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.height * .15,
-                                height: MediaQuery.of(context).size.width * .35,
+                                width: MediaQuery.of(context).size.height * .16,
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: Colors.grey,
-                                  image: DecorationImage(
-                                    image: NetworkImage(movie!.largeCoverImage ?? ""),
-                                    fit: BoxFit.fill,
-                                  )
-                                ),
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Colors.grey,
+                                    image: DecorationImage(
+                                      image: NetworkImage(
+                                          movie!.largeCoverImage ?? ""),
+                                      fit: BoxFit.fill,
+                                    )),
                               ),
                               const SizedBox(width: 10),
                               Expanded(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    const SizedBox(height: 5,),
                                     Text(
                                       maxLines: 1,
                                       movie.title ?? "",
-                                      style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white),
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
                                       movie.year.toString(),
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.white,
                                       ),
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
-                                      movie.genres != null ?'Genres: ${movie.genres?.join(", ")}' : 'hello',
-                                      style: const TextStyle(
+                                      movie.genres!.length > 2
+                                          ? 'Genres: ${movie.genres?.sublist(0, 2).join(", ")}'
+                                          : 'Genres: ${movie.genres?.join(", ")}',
+                                      style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.white,
                                       ),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     ),
-                                    const SizedBox(
-                                      height: 20,
-                                    ),
+                                    Spacer(flex: 3,),
                                     Row(
                                       children: [
                                         const Spacer(),
@@ -134,21 +127,25 @@ class SeeAllUi extends StatelessWidget {
                                                     WatchListMovieModel(
                                                         name: movie.title ?? "",
                                                         image: movie
-                                                            .largeCoverImage ?? "",
+                                                                .largeCoverImage ??
+                                                            "",
                                                         releaseYear: movie.year
                                                             .toString(),
                                                         runtime: movie.runtime
                                                             .toString(),
                                                         rating: movie.rating
                                                             .toString(),
-                                                        genres: movie.genres ?? [],
+                                                        genres:
+                                                            movie.genres ?? [],
                                                         id: movie.id!));
-                                                CustomSnackbar.show(context, "Added to Watchlist");
+                                                CustomSnackbar.show(context,
+                                                    "Added to Watchlist");
                                               },
                                               textcolor: Colors.white),
                                         ),
                                       ],
-                                    )
+                                    ),
+                                    Spacer(flex: 1,),
                                   ],
                                 ),
                               ),

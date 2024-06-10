@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class BoxShapeText extends StatelessWidget {
   final String text;
+  final Color color;
 
-  const BoxShapeText({super.key, required this.text});
+  const BoxShapeText({super.key, required this.text, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class BoxShapeText extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.transparent,
         border: Border.all(
-          color: Colors.white, // Border color
+          color: color, // Border color
           width: 1.2, // Border width
         ),
         borderRadius: BorderRadius.circular(100),
@@ -22,8 +23,8 @@ class BoxShapeText extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: color,
                 fontSize: 12,
               ),
             ),
