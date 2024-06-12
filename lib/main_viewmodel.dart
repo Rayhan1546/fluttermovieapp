@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mymovieapp/Auth/Auth_service.dart';
 import 'package:mymovieapp/data/local/theme_data_source.dart';
 import 'data/local/language_data_source.dart';
 import 'features/settings_page/widgets/enums.dart';
@@ -19,6 +20,8 @@ class MainViewmodel {
 
   ValueNotifier<Language> language = ValueNotifier(Language.English);
   ValueNotifier<Themes> theme = ValueNotifier(Themes.dark);
+
+  AuthService authService = AuthService.getInstance();
 
   void _loadLanguage() async {
     Language? savedLanguage = await LanguageDataSource.getLanguage();
@@ -42,5 +45,9 @@ class MainViewmodel {
   void onClickSetLanguage(Language language) {
     this.language.value = language;
     LanguageDataSource.setLanguage(language);
+  }
+
+  void logoutUser() async {
+    await authService.signout();
   }
 }

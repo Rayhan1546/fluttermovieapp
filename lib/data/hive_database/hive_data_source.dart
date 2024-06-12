@@ -5,6 +5,7 @@ class HiveDataSource {
   Future<bool> addMovies(List<HiveMovieModel> movies) async {
     try {
       final box = Hive.box<HiveMovieModel>('moviesBox');
+      box.clear();
       box.addAll(movies);
       return true;
     } catch (e) {

@@ -1,4 +1,3 @@
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
@@ -6,6 +5,7 @@ import 'package:mymovieapp/common/widgets/elevated_btn.dart';
 import 'package:mymovieapp/common/widgets/primary_pass_field.dart';
 import 'package:mymovieapp/common/widgets/primary_text_field.dart';
 import 'package:mymovieapp/features/login/login_viewmodel.dart';
+import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
 import 'package:mymovieapp/features/registation/registation_ui.dart';
 
 class LoginUi extends StatelessWidget {
@@ -18,11 +18,10 @@ class LoginUi extends StatelessWidget {
     viewModel.shouldNavigate.addListener(() {
       if (viewModel.shouldNavigate.value == true) {
         Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => RegistationUI(),
-          )
-        );
+            context,
+            MaterialPageRoute(
+              builder: (context) => PageTransitionUi(),
+            ));
       }
     });
     return SafeArea(
@@ -39,9 +38,14 @@ class LoginUi extends StatelessWidget {
                 ),
                 const Text(
                   'Welcome Back!',
-                  style: TextStyle(fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(
+                  height: 10,
+                ),
                 const Text(
                   'Please sign in to your account',
                   style: TextStyle(fontSize: 16, color: Colors.white),
@@ -104,9 +108,10 @@ class LoginUi extends StatelessWidget {
                   child: ElevatedBtn(
                       buttonText: 'Sign In',
                       backgroundColor: Colors.blue,
-                      onPressed: () {
-                        viewModel.onClickSignIn();
-                        CustomSnackbar.show(context, viewModel.errorSnackbarMsg.value);
+                      onPressed: () async {
+                        String? loginState = await viewModel.onClickSignIn();
+                          CustomSnackbar.show(
+                              context, loginState);
                       },
                       textcolor: Colors.white),
                 ),
@@ -135,7 +140,10 @@ class LoginUi extends StatelessWidget {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            print('hello ontap');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegistationUI()));
                           },
                       ),
                     ],

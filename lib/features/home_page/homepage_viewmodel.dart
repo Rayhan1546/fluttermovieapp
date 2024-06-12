@@ -21,7 +21,7 @@ class HomepageViewmodel {
 
   MovieRepository movieRepository;
 
-  late final Stream<List<Movies>> _movieDataStream;
+  late Stream<List<Movies>> _movieDataStream;
 
   static ValueNotifier<int> pageIndex = ValueNotifier(0);
 
@@ -31,14 +31,16 @@ class HomepageViewmodel {
   WatchListViewmodel watchListViewmodel = WatchListViewmodel.getInstance();
 
   HomepageViewmodel({required this.movieRepository}) {
-    _movieDataStream = movieRepository.getMovieList();
     fetchMovieData();
   }
 
   void fetchMovieData() {
-    _movies.value = [];
+    debugPrint("Viewmodel: fetchMovieData");
+    _movieDataStream = movieRepository.getMovieList(false);
     if (kDebugMode) {
       _movieDataStream.listen((movieList) {
+        print(movieList);
+        _movies.value = [];
         _movies.value = movieList;
       });
     }

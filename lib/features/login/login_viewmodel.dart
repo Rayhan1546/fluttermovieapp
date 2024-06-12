@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mymovieapp/Auth/Auth_service.dart';
 import 'package:mymovieapp/common/validators/email_validator.dart';
 import 'package:mymovieapp/common/validators/password_validator.dart';
 
@@ -9,7 +10,8 @@ class LoginViewModel {
 
   ValueNotifier<bool> obsecuretext = ValueNotifier(true);
   ValueNotifier<bool> shouldNavigate = ValueNotifier(false);
-  ValueNotifier<String?> errorSnackbarMsg = ValueNotifier(null);
+
+  AuthService authService = AuthService.getInstance();
 
   void obsecureiconclick() {
     obsecuretext.value = !obsecuretext.value;
@@ -27,23 +29,24 @@ class LoginViewModel {
     return (emailcontroller.text.isEmpty || passcontroller.text.isEmpty);
   }
 
-  void onClickSignIn() {
+  Future<String?> onClickSignIn() async {
+    final user = await authService.loginWithEmail(
+        emailcontroller.text, passcontroller.text);
+
     if (isAllFieldEntered()) {
-      errorSnackbarMsg.value = "Fields can't be empty";
-      return;
+      return "Fields can't be empty";
     }
 
     if (!EmailValidator.isValid(emailcontroller.text) &&
         !PasswordValidator.isValid(passcontroller.text)) {
-      return;
+      return "Email and Password isn't correct";
     }
 
-    if (emailcontroller.text == 'mahmudrayhan256@gmail.com' &&
-        passcontroller.text == '123456a#') {
-      shouldNavigate.value = true;
-      return;
+    if (user == null) {
+      return "Please enter the correct username or password";
     }
 
-    errorSnackbarMsg.value = "Please enter the correct username or password";
+    shouldNavigate.value = true;
+    return "Success";
   }
 }

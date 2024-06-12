@@ -4,6 +4,7 @@ import 'package:mymovieapp/common/widgets/custom_snack_bar.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
 import 'package:mymovieapp/common/widgets/primary_pass_field.dart';
 import 'package:mymovieapp/common/widgets/primary_text_field.dart';
+import 'package:mymovieapp/features/login/login_ui.dart';
 import 'package:mymovieapp/features/registation/registation_viewmodel.dart';
 
 class RegistationUI extends StatelessWidget {
@@ -24,7 +25,22 @@ class RegistationUI extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(
-                height: 80,
+                height: 10,
+              ),
+              Align(
+                alignment: Alignment.topLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 35,
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 55,
               ),
               const Text(
                 'Create an account',
@@ -116,7 +132,8 @@ class RegistationUI extends StatelessWidget {
                   backgroundColor: Colors.blue,
                   onPressed: () {
                     viewModel.onClickedSignUp();
-                    CustomSnackbar.show(context, viewModel.errorSnackbarMsg.value);
+                    CustomSnackbar.show(
+                        context, viewModel.errorSnackbarMsg.value);
                   },
                   textcolor: Colors.white,
                 ),
@@ -134,7 +151,10 @@ class RegistationUI extends StatelessWidget {
                       style: const TextStyle(fontWeight: FontWeight.bold),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          print('hello ontap');
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginUi()));
                         },
                     ),
                   ],

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:mymovieapp/Auth/Auth_service.dart';
 import 'package:mymovieapp/common/validators/email_validator.dart';
 import 'package:mymovieapp/common/validators/password_validator.dart';
 
@@ -10,9 +11,9 @@ class RegistationViewModel {
 
   ValueNotifier<bool> obsecureText1 = ValueNotifier(true);
   ValueNotifier<bool> obsecureText2 = ValueNotifier(true);
-  ValueNotifier<bool> shouldSignUp = ValueNotifier(false);
-
   ValueNotifier<String?> errorSnackbarMsg = ValueNotifier(null);
+
+  AuthService authService = AuthService.getInstance();
 
   void showPasswordF1() {
     obsecureText1.value = !obsecureText1.value;
@@ -41,7 +42,10 @@ class RegistationViewModel {
         passwordF2Controller.text.isEmpty);
   }
 
-  void onClickedSignUp() {
+  void onClickedSignUp() async {
+    final user = await authService.createNewUser(
+        emailController.text, passwordF1Controller.text);
+
     if (isAllFieldEntered()) {
       errorSnackbarMsg.value = "Fields can't be empty";
       return;
@@ -57,6 +61,11 @@ class RegistationViewModel {
       return;
     }
 
-    shouldSignUp.value = true;
+    if (user == null) {
+      emailController.text = '';
+      nameController.text = '';
+      passwordF1Controller.text = '';
+      passwordF2Controller.text = '';
+    }
   }
 }

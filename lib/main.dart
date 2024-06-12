@@ -1,5 +1,7 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mymovieapp/features/login/login_ui.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
 import 'package:mymovieapp/features/search_page/search_page_ui.dart';
 import 'package:mymovieapp/features/watch_list/watch_list_ui.dart';
@@ -10,6 +12,8 @@ import 'data/hive_database/hive_movie_model.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
 
   final appDocumentDirectory =
       await path_provider.getApplicationDocumentsDirectory();
