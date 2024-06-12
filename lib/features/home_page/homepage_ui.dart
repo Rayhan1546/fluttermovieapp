@@ -28,7 +28,7 @@ class _HomepageUiState extends State<HomePageUi> {
     _listener = AppLifecycleListener(
       onShow: () => debugPrint('show'),
       onResume: () {
-        viewmodel.fetchMovieData();
+        viewmodel.fetchMovieData(true);
       },
       onHide: () => debugPrint('hide'),
       onInactive: () => debugPrint('inactive'),
@@ -48,7 +48,7 @@ class _HomepageUiState extends State<HomePageUi> {
           backgroundColor: Theme.of(context).colorScheme.surface,
           body: RefreshIndicator(
             onRefresh: () async {
-              viewmodel.fetchMovieData();
+              viewmodel.fetchMovieData(true);
             },
             child: SafeArea(
               child: Container(

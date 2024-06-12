@@ -15,15 +15,18 @@ class LoginUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    viewModel.shouldNavigate.addListener(() {
-      if (viewModel.shouldNavigate.value == true) {
-        Navigator.push(
+    viewModel.shouldNavigate.addListener(
+      () {
+        if (viewModel.shouldNavigate.value == true) {
+          Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => PageTransitionUi(),
-            ));
-      }
-    });
+            ),
+          );
+        }
+      },
+    );
     return SafeArea(
       child: Scaffold(
         body: Container(
@@ -110,8 +113,7 @@ class LoginUi extends StatelessWidget {
                       backgroundColor: Colors.blue,
                       onPressed: () async {
                         String? loginState = await viewModel.onClickSignIn();
-                          CustomSnackbar.show(
-                              context, loginState);
+                        CustomSnackbar.show(context, loginState);
                       },
                       textcolor: Colors.white),
                 ),
@@ -124,7 +126,9 @@ class LoginUi extends StatelessWidget {
                   child: ElevatedBtn(
                       buttonText: 'Sign in with Google',
                       backgroundColor: Colors.white,
-                      onPressed: () {},
+                      onPressed: () async {
+                        await viewModel.onClickGoogleSignIn();
+                      },
                       textcolor: Colors.black),
                 ),
                 const SizedBox(

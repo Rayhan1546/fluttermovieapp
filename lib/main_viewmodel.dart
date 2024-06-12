@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/Auth/Auth_service.dart';
 import 'package:mymovieapp/data/local/theme_data_source.dart';
+import 'package:mymovieapp/data/local/user_pref.dart';
 import 'data/local/language_data_source.dart';
 import 'features/settings_page/widgets/enums.dart';
 import 'package:mymovieapp/common/enums/themes.dart';
@@ -48,6 +49,7 @@ class MainViewmodel {
   }
 
   void logoutUser() async {
+    await UserPref.clearUserFromSharedPreferences();
     await authService.signout();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   static AuthService? authService;
@@ -10,13 +11,17 @@ class AuthService {
 
   final _auth = FirebaseAuth.instance;
 
-  Future<User?> createNewUser(String email, String password) async {
+  Future<User?> createNewUser(
+      String email, String password, String name) async {
     try {
       UserCredential userCredential =
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      await userCredential.user?.updateDisplayName(name);
+
       return userCredential.user; // Return the User object
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -31,7 +36,7 @@ class AuthService {
     }
   }
 
-  Future<User?> loginWithEmail(String email, String password) async {
+  Future<User?> loginWithEmailPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -46,6 +51,27 @@ class AuthService {
       }
       return null;
     }
+  }
+
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  Future<User?> signInWithGoogle() async {
+    try {
+      GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
+      if (googleUser != null) {
+        GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        final UserCredential authResult =
+            await _auth.signInWithCredential(credential);
+        return authResult.user;
+      }
+    } catch (error) {
+      print("Error signing in with Google: $error");
+    }
+    return null;
   }
 
   Future<void> signout() async {

@@ -31,16 +31,15 @@ class HomepageViewmodel {
   WatchListViewmodel watchListViewmodel = WatchListViewmodel.getInstance();
 
   HomepageViewmodel({required this.movieRepository}) {
-    fetchMovieData();
+    fetchMovieData(false);
   }
 
-  void fetchMovieData() {
-    debugPrint("Viewmodel: fetchMovieData");
-    _movieDataStream = movieRepository.getMovieList(false);
+  void fetchMovieData(bool hardRefresh) {
+    _movies.value = null;
+    _movieDataStream = movieRepository.getMovieList(hardRefresh);
     if (kDebugMode) {
       _movieDataStream.listen((movieList) {
         print(movieList);
-        _movies.value = [];
         _movies.value = movieList;
       });
     }

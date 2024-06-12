@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mymovieapp/common/widgets/elevated_btn.dart';
+import 'package:mymovieapp/features/login/login_ui.dart';
 import 'package:mymovieapp/features/settings_page/widgets/language_dialog_box_ui.dart';
 import 'package:mymovieapp/features/settings_page/widgets/theme_dialog_box_ui.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
@@ -115,6 +116,8 @@ class SettingsPageUi extends StatelessWidget {
           backgroundColor: Colors.indigoAccent,
           onPressed: () {
             mainViewmodel.logoutUser();
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => LoginUi()));
           },
           textcolor: Colors.black),
     );

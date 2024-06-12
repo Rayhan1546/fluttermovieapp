@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mymovieapp/Auth/Auth_service.dart';
 import 'package:mymovieapp/common/validators/email_validator.dart';
 import 'package:mymovieapp/common/validators/password_validator.dart';
+import 'package:mymovieapp/data/implementations/auth_repository_impl.dart';
+import 'package:mymovieapp/data/repository/auth_repository.dart';
 
 class RegistationViewModel {
   TextEditingController nameController = TextEditingController();
@@ -13,7 +14,7 @@ class RegistationViewModel {
   ValueNotifier<bool> obsecureText2 = ValueNotifier(true);
   ValueNotifier<String?> errorSnackbarMsg = ValueNotifier(null);
 
-  AuthService authService = AuthService.getInstance();
+  AuthRepository authRepository = AuthRepositoryImpl();
 
   void showPasswordF1() {
     obsecureText1.value = !obsecureText1.value;
@@ -43,8 +44,8 @@ class RegistationViewModel {
   }
 
   void onClickedSignUp() async {
-    final user = await authService.createNewUser(
-        emailController.text, passwordF1Controller.text);
+    final user = await authRepository.createNewUser(
+        emailController.text, passwordF1Controller.text, nameController.text);
 
     if (isAllFieldEntered()) {
       errorSnackbarMsg.value = "Fields can't be empty";

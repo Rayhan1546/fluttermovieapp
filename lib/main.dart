@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:mymovieapp/data/local/user_pref.dart';
+import 'package:mymovieapp/data/models/user_model.dart';
 import 'package:mymovieapp/features/login/login_ui.dart';
 import 'package:mymovieapp/features/page_transitions/page_transition_ui.dart';
-import 'package:mymovieapp/features/search_page/search_page_ui.dart';
-import 'package:mymovieapp/features/watch_list/watch_list_ui.dart';
 import 'package:mymovieapp/main_viewmodel.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,11 +22,16 @@ void main() async {
   Hive.registerAdapter(MovieAdapter());
 
   await Hive.openBox<HiveMovieModel>('moviesBox');
-  runApp(MyApp());
+
+  UserModel? user = await UserPref.loadUserFromSharedPreferences();
+
+  runApp(MyApp(user: user));
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  final UserModel? user;
+
+  MyApp({required this.user});
 
   MainViewmodel viewmodel = MainViewmodel.getInstance();
 
@@ -41,7 +46,7 @@ class MyApp extends StatelessWidget {
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
-                home: PageTransitionUi(),
+                home: user == null ? LoginUi() : PageTransitionUi(),
                 theme: theme.getTheme(),
                 localizationsDelegates: AppLocalizations.localizationsDelegates,
                 supportedLocales: AppLocalizations.supportedLocales,

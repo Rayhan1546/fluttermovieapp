@@ -29,11 +29,10 @@ class MovieRepositoryImpl extends MovieRepository {
   Stream<List<Movies>> getMovieList(bool shouldFetchApi) async* {
     await Future.delayed(Duration(seconds: 3));
 
-    if(!shouldFetchApi) {
+    if (!shouldFetchApi) {
       final moviesFromHive = await hiveDataSource.getMovies();
       List<Movies> movies = moviesFromHive
-          .map((e) =>
-          Movies(
+          .map((e) => Movies(
               id: e.id,
               title: e.title,
               year: e.year,
